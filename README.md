@@ -2,7 +2,9 @@ This repository is to create a website where students can learn how financial st
 
 CRHCAP Project 2024
 
-Title: Crowd Learning of New Perspectives on Investments Using Textual Analysis and Machine Learning of Financial Statements Tasks: Developing front-end and backend codes to analyze Investments in human capital to improve stock valuation tools using text data from the SEC
+Title: Crowd Learning of New Perspectives on Investments Using Textual Analysis and Machine Learning of Financial Statements 
+
+Tasks: Developing front-end and backend codes to analyze Investments in human capital to improve stock valuation tools using text data from the SEC
 
 STEP 1 – Developing a Learning Game to Assign a Role to Participating Students in a Team STEP 2 – Developing codes to assign stocks to each team and to receive keywords and rankings STEP 3 – Developing NLP and ML models to evaluate human rankings and keywords
 
