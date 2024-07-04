@@ -40,3 +40,37 @@ Are you willing to participate in a project that requires reading the financial 
 STEP 2: Develop codes to assign stocks and collect keywords. Test the codes using the sample keyword list Hyuna Park developed. 
 
 STEP3: Refine the NLP and ML codes using the templates and W2V models Hyuna Park developed.
+
+
+# Development Notes
+
+## To install and run locally:
+
+1. Clone repository
+
+```bash
+git clone https://github.com/hpark507/CRHCAP.git
+```
+
+2. Run Server Locally
+
+Note the server here, is a mock server with the intention of simulating a real server.
+
+```bash
+cd server 
+npm install -g json-server
+json-server --watch db.json
+```
+
+3. Run Client Locally
+
+```bash
+cd client
+npm install
+npm run dev
+```
+
+
+## Relevant Links for Development
+
+
