@@ -5,7 +5,7 @@ import { Icons } from "@/components/Icons";
 
 const LoginForm = () => {
   const [emplid, setEmplid] = useState<undefined | string>("");
-  const [surname, setSurname] = useState<undefined | string>("Doe");
+  const [surname, setSurname] = useState<undefined | string>("");
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     signIn("credentials", {
@@ -41,7 +41,7 @@ const LoginForm = () => {
             type="text"
             className="p-3 border border-slate-700 rounded-lg"
             id="name"
-            placeholder="Uname@mail.com"
+            placeholder="23381100"
             required
           />
         </div>

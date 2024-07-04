@@ -58,8 +58,9 @@ Note the server here, is a mock server with the intention of simulating a real s
 
 ```bash
 cd server 
+cd mockup -- this is the mock server
 npm install -g json-server
-json-server --watch db.json
+npx json-server db.json -p 3001 --watch
 ```
 
 3. Run Client Locally
@@ -72,5 +73,15 @@ npm run dev
 
 
 ## Relevant Links for Development
+
+- [Design Doc](https://snip.mathpix.com/wangnelson2/notes/crowd-learning-of-human-capital---design-document-192e64e2-0745-46d8-a6b9-9a8d6a880c5d)
+
+
+
+## Notes
+
+- Stacks: Nextjs Typescript
+
+
 
 

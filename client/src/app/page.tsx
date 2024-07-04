@@ -12,16 +12,25 @@ export default async function Home() {
       {user ? (
         <UserInfo user={user} />
       ) : (
-        <div className="flex flex-col items-center justify-center gap-2 p-5 w-fit shadow-lg rounded-lg">
-          <h1 className="text-2xl font-bold">Crowd Learning Human Capita Innovative</h1>
-          <p className="flex gap-2">
-            You must be signed in to view this page
+        <div className="flex flex-col justify-center gap-2 p-5 w-fit shadow-lg rounded-lg" style={{minHeight: "25em"}}>
+          <h1 className="items-center text-2xl font-bold">
+            Crowd Learning Human Capita Innovative
+          </h1>
+          <p className="flex gap-2"></p>
+          <div className="flex justify-between">
+            <div>
+              <Link href="/about">
+                <span className="float-right text-blue-500 cursor-pointer hover:underline ml-4">
+                  About
+                </span>
+              </Link>
+            </div>
             <Link href="/signin">
               <span className="text-blue-500 cursor-pointer hover:underline">
                 Sign In
               </span>
             </Link>
-          </p>
+          </div>
         </div>
       )}
     </main>

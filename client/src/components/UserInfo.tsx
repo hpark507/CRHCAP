@@ -45,15 +45,12 @@ const UserInfo = ({ user }: UserInfoProps) => {
               </label>
               <input
                 id="user-name"
-                value={email ?? "email@example.com"}
+                value={email ?? "23381100"}
                 className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 py-2"
                 disabled
               />
             </div>
-{/* 
-            <div>
-              <label htmlFor=""></label>
-            </div> */}
+            
           </div>
         </div>
         <hr className="my-4" />
