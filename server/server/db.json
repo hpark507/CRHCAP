@@ -1,0 +1,33 @@
+{
+    "users": [
+        {
+            "id": "23881380",
+            "surname": "wang",
+            "emplid": "23881380",
+            "class_code": "CSE 110",
+            "score": 0
+        }
+    ],
+    "phrases": [
+        {
+            "id": 1,
+            "keyword": "Culture Maniac",
+            "reason": "This is a great phrase to use in the workplace to describe someone who is passionate about the company culture and is always looking for ways to improve it.",
+            "quote": "I am a culture maniac and I am always looking for ways to improve the company culture.",
+            "category": "Culture, Passion",
+            "score": 0,
+            "weight": 1,
+            "user_id": 1,
+            "timestamp": "2022-01-01T00:00:00.000Z",
+            "symbol": "APPL",
+            "table_id": 1
+        }
+    ],
+    "tables": [
+        {
+            "id": 1,
+            "symbol": "APPL",
+            "user_id": 1
+        }
+    ]
+}
