@@ -1,33 +1,148 @@
 {
-    "users": [
-        {
-            "id": "23881380",
-            "surname": "wang",
-            "emplid": "23881380",
-            "class_code": "CSE 110",
-            "score": 0
-        }
-    ],
-    "phrases": [
-        {
-            "id": 1,
-            "keyword": "Culture Maniac",
-            "reason": "This is a great phrase to use in the workplace to describe someone who is passionate about the company culture and is always looking for ways to improve it.",
-            "quote": "I am a culture maniac and I am always looking for ways to improve the company culture.",
-            "category": "Culture, Passion",
-            "score": 0,
-            "weight": 1,
-            "user_id": 1,
-            "timestamp": "2022-01-01T00:00:00.000Z",
-            "symbol": "APPL",
-            "table_id": 1
-        }
-    ],
-    "tables": [
-        {
-            "id": 1,
-            "symbol": "APPL",
-            "user_id": 1
-        }
-    ]
+  "users": [
+    {
+      "id": "23881380",
+      "surname": "wang",
+      "emplid": "23881380",
+      "class_code": "CSE 110",
+      "score": 0,
+      "reports_symbols": [
+        "AAPL",
+        "GOOGL",
+        "TSLA"
+      ]
+    },
+    {
+      "id": "23881381",
+      "surname": "wang",
+      "emplid": "23881381",
+      "class_code": "CSE 110",
+      "score": 0,
+      "reports_symbols": [
+        "GOOGL",
+        "IREN",
+        "JPM"
+      ]
+    }
+  ],
+  "phrases": [
+    {
+      "id": "1",
+      "keyword": "Culture Maniac",
+      "reason": "This is a great phrase to use in the workplace to describe someone who is passionate about the company culture and is always looking for ways to improve it.",
+      "quote": "I am a culture maniac and I am always looking for ways to improve the company culture.",
+      "categories": [
+        "Culture",
+        "Passion"
+      ],
+      "weight": "1",
+      "user_id": "1",
+      "timestamp": "2022-01-01T00:00:00.000Z",
+      "symbol": "APPL",
+      "table_id": "1"
+    },
+    {
+      "id": "6ee7",
+      "keyword": "Google",
+      "quote": "Qupote",
+      "reason": "Reasonx",
+      "categories": [
+        "Culture"
+      ],
+      "weight": "3",
+      "user_id": "1",
+      "symbol": "GOOGL",
+      "table_id": "1"
+    },
+    {
+      "id": "00b9",
+      "keyword": "",
+      "quote": "123",
+      "reason": "test",
+      "categories": [
+        "Leadership"
+      ],
+      "weight": "32",
+      "user_id": "1",
+      "symbol": "GOOGL",
+      "table_id": "1"
+    },
+    {
+      "id": "e128",
+      "keyword": "add",
+      "quote": "",
+      "reason": "",
+      "categories": [],
+      "weight": 0,
+      "user_id": "23881380",
+      "symbol": "GOOGL",
+      "table_id": "1"
+    },
+    {
+      "id": "ab2d",
+      "keyword": "",
+      "quote": "",
+      "reason": "",
+      "categories": [],
+      "weight": 0,
+      "user_id": "23881380",
+      "symbol": "GOOGL",
+      "table_id": "1"
+    },
+    {
+      "id": "8209",
+      "keyword": "Keywords",
+      "quote": "test",
+      "reason": "Name",
+      "categories": [
+        "Leadership"
+      ],
+      "weight": "123",
+      "user_id": "23881380",
+      "symbol": "AAPL",
+      "table_id": "1"
+    }
+  ],
+  "tables": [
+    {
+      "id": "1",
+      "symbol": "APPL",
+      "user_id": "1"
+    },
+    {
+      "id": "23881380AAPL",
+      "symbol": "AAPL",
+      "user_id": "23881380"
+    },
+    {
+      "id": "23881380GOOGL",
+      "symbol": "GOOGL",
+      "user_id": "23881380"
+    },
+    {
+      "id": "23881380TSLA",
+      "symbol": "TSLA",
+      "user_id": "23881380"
+    },
+    {
+      "id": "23881381GOOGL",
+      "symbol": "GOOGL",
+      "user_id": "23881381"
+    },
+    {
+      "id": "23881381IREN",
+      "symbol": "IREN",
+      "user_id": "23881381"
+    },
+    {
+      "id": "23881381JPM",
+      "symbol": "JPM",
+      "user_id": "23881381"
+    },
+    {
+      "id": "23881382AMZN",
+      "symbol": "AMZN",
+      "user_id": "23881382"
+    }
+  ]
 }

@@ -1,16 +1,23 @@
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/configs/next-auth";
-import UserInfo from "@/components/UserInfo";
 import Link from "next/link";
+import UserInfo from "@/components/UserInfo";
+
+import { authOptions } from "@/configs/next-auth";
+import { getServerSession } from "next-auth/next";
+import Report from "@/components/report_component";
 
 export default async function Home() {
+
   const session = await getServerSession(authOptions);
   const user = session?.user;
-
+  
   return (
     <main className="flex min-h-screen items-center justify-center">
       {user ? (
-        <UserInfo user={user} />
+        // <UserInfo user={user} />
+        <Report reportProps={{
+          user_id: user?.email as string,
+          table_id: "1"
+        }} />
       ) : (
         <div className="flex flex-col justify-center gap-2 p-5 w-fit shadow-lg rounded-lg" style={{minHeight: "25em"}}>
           <h1 className="items-center text-2xl font-bold">

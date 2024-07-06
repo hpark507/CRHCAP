@@ -1,5 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
+
+import { addToReport } from "@/utils/api";
 import {
   Table,
   TableBody,
@@ -33,9 +35,12 @@ interface EditableTableProps {
   rows: Row[];
   setRows: React.Dispatch<React.SetStateAction<Row[]>>;
   stockSymbol: string;
+  user_id: string;
+  table_id: string;
+
 }
 
-const EditableTable: React.FC<EditableTableProps> = ({ rows, setRows, stockSymbol }) => {
+const EditableTable: React.FC<EditableTableProps> = ({ rows, setRows, stockSymbol, user_id, table_id }) => {
   const [newRow, setNewRow] = useState<Row>({
     keyword: "",
     reason: "",
@@ -60,7 +65,18 @@ const EditableTable: React.FC<EditableTableProps> = ({ rows, setRows, stockSymbo
       reason: "",
       categories: [],
       quote: "",
-      weight: 0,
+      weight: 0
+    });
+    console.log(newRow)
+    addToReport({
+      keyword: newRow.keyword,
+      quote: newRow.quote,
+      reason: newRow.reason,
+      categories: newRow.categories,
+      weight: newRow.weight,
+      user_id: user_id,
+      symbol: stockSymbol,
+      table_id: table_id
     });
   };
 

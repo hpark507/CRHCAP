@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import EditableTable from "@/components/EditableTable";
 import { Button, TextField, Box } from "@mui/material";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/configs/next-auth";
 
 interface Row {
   keyword: string;
@@ -11,10 +13,15 @@ interface Row {
   weight: number;
 }
 
-const Report: React.FC = () => {
+const Report: React.FC = async () => {
   const [symbols, setSymbols] = useState<string[]>(['AAPL', 'GOOGL','MSFT']);
   const [currentSymbolNumber, setCurrentSymbol] = useState<number>(1);
   
+  const session = await getServerSession(authOptions);
+  console.log("session", session);
+
+  const user_id = session?.user;
+  console.log("user_id", user_id);
   const [tables, setTables] = useState<{ [key: string]: Row[] }>({
     0: [],
     1: [],
@@ -46,7 +53,9 @@ const Report: React.FC = () => {
           <EditableTable 
             rows={tables[currentSymbolNumber]} 
             setRows={(rows) => setTables({ ...tables, [currentSymbolNumber]: rows })} 
-            stockSymbol={symbols[currentSymbolNumber]} 
+            stockSymbol={symbols[currentSymbolNumber]}
+            user_id="1"
+            table_id="1"
           />
         </div>
       </div>

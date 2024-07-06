@@ -10,8 +10,7 @@ interface UserInfoProps {
 }
 
 const UserInfo = ({ user }: UserInfoProps) => {
-  // console.log('==== user ====')
-  // console.log(user)
+  
   const {name, email, image } = user;
   return (
     <div className="flex flex-col items-center justify-center gap-2 p-5 max-w-md w-full shadow-lg rounded-lg">
@@ -50,7 +49,7 @@ const UserInfo = ({ user }: UserInfoProps) => {
                 disabled
               />
             </div>
-            
+
           </div>
         </div>
         <hr className="my-4" />
