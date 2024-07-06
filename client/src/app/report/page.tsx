@@ -54,8 +54,8 @@ const Report: React.FC = async () => {
             rows={tables[currentSymbolNumber]} 
             setRows={(rows) => setTables({ ...tables, [currentSymbolNumber]: rows })} 
             stockSymbol={symbols[currentSymbolNumber]}
-            user_id="1"
-            table_id="1"
+            user_id={user_id as string}
+            table_id={`${user_id} ${symbols[currentSymbolNumber]}`}
           />
         </div>
       </div>

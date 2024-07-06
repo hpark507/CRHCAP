@@ -68,6 +68,7 @@ const EditableTable: React.FC<EditableTableProps> = ({ rows, setRows, stockSymbo
       weight: 0
     });
     console.log(newRow)
+    console.log('Table ID: ', table_id)
     addToReport({
       keyword: newRow.keyword,
       quote: newRow.quote,

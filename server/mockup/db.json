@@ -42,64 +42,55 @@
       "table_id": "1"
     },
     {
-      "id": "6ee7",
-      "keyword": "Google",
-      "quote": "Qupote",
-      "reason": "Reasonx",
+      "id": "e2ae",
+      "keyword": "Key",
+      "quote": "Qutes",
+      "reason": "Reaon",
       "categories": [
         "Culture"
       ],
-      "weight": "3",
-      "user_id": "1",
+      "weight": "23",
+      "user_id": "23881380",
       "symbol": "GOOGL",
       "table_id": "1"
     },
     {
-      "id": "00b9",
-      "keyword": "",
-      "quote": "123",
-      "reason": "test",
+      "id": "b9ed",
+      "keyword": "testad",
+      "quote": "1213",
+      "reason": "sadasdsa",
+      "categories": [
+        "Culture"
+      ],
+      "weight": "023",
+      "user_id": "23881380",
+      "symbol": "GOOGL",
+      "table_id": "1"
+    },
+    {
+      "id": "030e",
+      "keyword": "213213",
+      "quote": "12321",
+      "reason": "12312",
       "categories": [
         "Leadership"
       ],
-      "weight": "32",
-      "user_id": "1",
-      "symbol": "GOOGL",
-      "table_id": "1"
-    },
-    {
-      "id": "e128",
-      "keyword": "add",
-      "quote": "",
-      "reason": "",
-      "categories": [],
-      "weight": 0,
+      "weight": "213",
       "user_id": "23881380",
       "symbol": "GOOGL",
       "table_id": "1"
     },
     {
-      "id": "ab2d",
-      "keyword": "",
-      "quote": "",
-      "reason": "",
-      "categories": [],
-      "weight": 0,
-      "user_id": "23881380",
-      "symbol": "GOOGL",
-      "table_id": "1"
-    },
-    {
-      "id": "8209",
-      "keyword": "Keywords",
-      "quote": "test",
-      "reason": "Name",
+      "id": "7ae7",
+      "keyword": "asdas",
+      "quote": "21321",
+      "reason": "asd",
       "categories": [
         "Leadership"
       ],
-      "weight": "123",
+      "weight": "2",
       "user_id": "23881380",
-      "symbol": "AAPL",
+      "symbol": "GOOGL",
       "table_id": "1"
     }
   ],
