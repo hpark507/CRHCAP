@@ -1,4 +1,4 @@
-"use client";
+"use server";
 import React, { useState } from "react";
 import EditableTable from "@/components/EditableTable";
 import { Button, TextField, Box } from "@mui/material";
@@ -21,7 +21,6 @@ const Report: React.FC = async () => {
   console.log("session", session);
 
   const user_id = session?.user;
-  console.log("user_id", user_id);
   const [tables, setTables] = useState<{ [key: string]: Row[] }>({
     0: [],
     1: [],
@@ -55,7 +54,7 @@ const Report: React.FC = async () => {
             setRows={(rows) => setTables({ ...tables, [currentSymbolNumber]: rows })} 
             stockSymbol={symbols[currentSymbolNumber]}
             user_id={user_id as string}
-            table_id={`${user_id} ${symbols[currentSymbolNumber]}`}
+            table_id={`${user_id}${symbols[currentSymbolNumber]}`}
           />
         </div>
       </div>

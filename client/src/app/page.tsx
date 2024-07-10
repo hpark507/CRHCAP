@@ -1,8 +1,10 @@
+"use server"
 import Link from "next/link";
 import UserInfo from "@/components/UserInfo";
 
 import { authOptions } from "@/configs/next-auth";
 import { getServerSession } from "next-auth/next";
+// import { getServerSession } from "next-auth/client";
 import Report from "@/components/report_component";
 
 export default async function Home() {

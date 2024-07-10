@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
-import { addToReport } from "@/utils/api";
+import { addToReport, getPhrases } from "@/utils/api";
 import {
   Table,
   TableBody,
@@ -37,10 +37,15 @@ interface EditableTableProps {
   stockSymbol: string;
   user_id: string;
   table_id: string;
-
 }
 
-const EditableTable: React.FC<EditableTableProps> = ({ rows, setRows, stockSymbol, user_id, table_id }) => {
+const EditableTable: React.FC<EditableTableProps> = ({
+  rows,
+  setRows,
+  stockSymbol,
+  user_id,
+  table_id,
+}) => {
   const [newRow, setNewRow] = useState<Row>({
     keyword: "",
     reason: "",
@@ -65,10 +70,10 @@ const EditableTable: React.FC<EditableTableProps> = ({ rows, setRows, stockSymbo
       reason: "",
       categories: [],
       quote: "",
-      weight: 0
+      weight: 0,
     });
-    console.log(newRow)
-    console.log('Table ID: ', table_id)
+    // console.log(newRow)
+
     addToReport({
       keyword: newRow.keyword,
       quote: newRow.quote,
@@ -77,9 +82,29 @@ const EditableTable: React.FC<EditableTableProps> = ({ rows, setRows, stockSymbo
       weight: newRow.weight,
       user_id: user_id,
       symbol: stockSymbol,
-      table_id: table_id
+      table_id: table_id,
     });
   };
+
+  const handleReceiveData = async () => {
+    const data = await getPhrases(table_id);
+    // console.log("Data: ", data)
+    const newsRowsData = [];
+    for (const row of data) {
+      newsRowsData.push({
+        keyword: row?.keyword ?? "",
+        reason: row?.reason ?? "",
+        categories: row?.categories ?? "",
+        quote: row?.quote ?? "",
+        weight: row?.weight ?? 0,
+      });
+    }
+    setRows( newsRowsData);
+  };
+
+  useEffect(() => {
+    handleReceiveData();
+  }, [table_id, user_id, stockSymbol]);
 
   const handleDeleteRow = (index: number) => {
     const newRows = rows.filter((_, i) => i !== index);

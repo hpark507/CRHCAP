@@ -4,7 +4,6 @@ import EditableTable from "@/components/EditableTable";
 import { Button, Box } from "@mui/material";
 
 import { authOptions } from "@/configs/next-auth";
-import { getServerSession } from "next-auth/next";
 
 interface Row {
   keyword: string;
@@ -28,14 +27,14 @@ const Report: React.FC<ReportProps> = ({ reportProps }) => {
   const [currentSymbolNumber, setCurrentSymbol] = useState<number>(1);
   const [session, setSession] = useState<any>(null);
 
-  useEffect(() => {
-    async function fetchSession() {
-      const session = await getServerSession(authOptions);
-      setSession(session);
-      console.log("session", session);
-    }
-    fetchSession();
-  }, []);
+  // useEffect(() => {
+  //   async function fetchSession() {
+  //     const session = await getServerSession(authOptions);
+  //     setSession(session);
+  //     console.log("session", session);
+  //   }
+  //   fetchSession();
+  // }, []);
 
   console.log("user_id", user_id);
 
@@ -83,7 +82,7 @@ const Report: React.FC<ReportProps> = ({ reportProps }) => {
             }
             stockSymbol={symbols[currentSymbolNumber]}
             user_id={user_id}
-            table_id={table_id}
+            table_id={`${user_id}${symbols[currentSymbolNumber]}`}
           />
         </div>
       </div>
