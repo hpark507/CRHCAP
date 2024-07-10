@@ -44,7 +44,17 @@ STEP3: Refine the NLP and ML codes using the templates and W2V models Hyuna Park
 
 # Development Notes
 
+## requirements:
+
+https://nodejs.org/en/download/prebuilt-installer
+
+
+![](./img/2024-07-10-16-10-56.png)
+
 ## To install and run locally:
+
+
+
 
 1. Clone repository
 

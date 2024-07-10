@@ -171,6 +171,19 @@
       "user_id": "23881380",
       "symbol": "AAPL",
       "table_id": "23881380AAPL"
+    },
+    {
+      "id": "58d0",
+      "keyword": "asdas",
+      "quote": "asdas",
+      "reason": "asdas",
+      "categories": [
+        "Leadership"
+      ],
+      "weight": "213",
+      "user_id": "23881380",
+      "symbol": "GOOGL",
+      "table_id": "23881380GOOGL"
     }
   ],
   "tables": [
