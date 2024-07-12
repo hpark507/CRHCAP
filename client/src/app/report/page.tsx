@@ -1,6 +1,6 @@
 "use server";
 import React, { useState } from "react";
-import EditableTable from "@/components/EditableTable";
+import EditableTable from "@/components/TicketEditableTable";
 import { Button, TextField, Box } from "@mui/material";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/configs/next-auth";
@@ -36,9 +36,14 @@ const Report: React.FC = async () => {
           <br />
           <Box display="flex" justifyContent="center" mb={2}>
             {symbols.map(symbol => (
-              <Button key={symbol} variant={symbol === symbols[currentSymbolNumber] ? "outlined" : "text"} onClick={() => setCurrentSymbol(
-                symbols.findIndex(s => s === symbol)
-              )} style={{ margin: '0 5px' }}>
+              <Button key={symbol} variant={symbol === symbols[currentSymbolNumber] ? "outlined" : "text"} onClick={() => {
+                
+
+                setCurrentSymbol(
+                  symbols.findIndex(s => s === symbol)
+                )
+
+              }} style={{ margin: '0 5px' }}>
                 {symbol}
               </Button>
             ))}

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
-import { addToReport, getPhrases } from "@/utils/api";
+import { addToReport, getPhrases, removePhraseKeywordAndTable } from "@/utils/api";
 import {
   Table,
   TableBody,
@@ -109,6 +109,7 @@ const EditableTable: React.FC<EditableTableProps> = ({
   const handleDeleteRow = (index: number) => {
     const newRows = rows.filter((_, i) => i !== index);
     setRows(newRows);
+    removePhraseKeywordAndTable(rows[index].keyword, table_id);
   };
 
   return (

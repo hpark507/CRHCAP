@@ -16,8 +16,92 @@ export const getUsers = async () => {
     const response = await fetch(`${backendUrl}/users`);
     const data = await response.json();
 
-    return Object.values(data);
+    return data;
 }
+
+
+// Add User.
+export const addUser = async (userData: any) => {
+    console.log('backendUrl', backendUrl)
+    const response = await fetch(`${backendUrl}/users`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+    });
+
+    return response;
+}
+
+
+// remove User.
+export const removeUser = async (emplid: string) => {
+    console.log('doesnt really work yet')
+    // const response = await fetch(`${backendUrl}/users/${emplid}`, {
+    //     method: 'DELETE',
+    // });
+
+    // return response;
+}
+
+
+// Get all symbols.
+export const getSymbols = async () => {
+    const response = await fetch(`${backendUrl}/symbols`);
+    const data = await response.json();
+
+    return data;
+}
+
+// Add Symbol.
+export const addSymbol = async (symbolString: string) => {
+    const response = await fetch(`${backendUrl}/symbols`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id: symbolString})
+    });
+
+    return response;
+}
+
+
+// remove Symbol.
+export const removeSymbol = async (symbol: string) => {
+    const response = await fetch(`${backendUrl}/symbols/${symbol}`, {
+        method: 'DELETE',
+    });
+
+    return response;
+}
+
+
+// Get all categories.
+export const getCategories = async () => {
+    const response = await fetch(`${backendUrl}/categories`);
+    const data = await response.json();
+
+    return data;
+}
+
+// Add Category.
+export const addCategory = async (categoryString: string) => {
+    const response = await fetch(`${backendUrl}/categories`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id: categoryString})
+    });
+
+    return response;
+}
+
+
+
+
 
 export const getUserData = async (emplid: string) => {
     const response = await fetch(`${backendUrl}/users/${emplid}`);
@@ -65,6 +149,23 @@ export const getPhrases = async (table_id: string) => {
     return data;
 }
 
+
+export const removePhrase = async (phraseId: string) => {
+    const response = await fetch(`${backendUrl}/phrases/${phraseId}`, {
+        method: 'DELETE',
+    });
+ 
+    return response;
+}
+
+export const removePhraseKeywordAndTable = async (keyword: string, table_id: string) => {
+    // console.log(' ===== Remove Phrase =====')
+    // console.log(`http://localhost:3001/phrases?keyword=${keyword}&table_id${table_id}`);
+    const response = await fetch(`http://localhost:3001/phrases?keyword=${keyword}&table_id=${table_id}`, {
+        method: 'DELETE',
+    });
+    return response;
+}
 
 
 export const addToReport = async (reportData: any) => {

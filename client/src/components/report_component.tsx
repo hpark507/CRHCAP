@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import EditableTable from "@/components/EditableTable";
+import EditableTable from "@/components/TicketEditableTable";
 import { Button, Box } from "@mui/material";
 
 import { authOptions } from "@/configs/next-auth";

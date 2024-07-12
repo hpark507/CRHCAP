@@ -1,4 +1,35 @@
 {
+  "ticket_symbols": [
+    {
+      "id": "AAPL"
+    },
+    {
+      "id": "GOOGL"
+    },
+    {
+      "id": "TSLA"
+    },
+    {
+      "id": "IREN"
+    },
+    {
+      "id": "JPM"
+    },
+    {
+      "id": "AMZN"
+    }
+  ],
+  "categories": [
+    {
+      "id": "Culture"
+    },
+    {
+      "id": "Passion"
+    },
+    {
+      "id": "Leadership"
+    }
+  ],
   "users": [
     {
       "id": "23881380",
@@ -184,6 +215,9 @@
       "user_id": "23881380",
       "symbol": "GOOGL",
       "table_id": "23881380GOOGL"
+    },
+    {
+      "id": "6844"
     }
   ],
   "tables": [

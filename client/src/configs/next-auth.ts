@@ -1,7 +1,7 @@
 import { User, type NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { getUsers, getUserData } from "@/utils/api";
+import { getUserData } from "@/utils/api";
 
 export const authOptions: NextAuthOptions = {
   providers: [

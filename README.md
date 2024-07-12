@@ -32,7 +32,7 @@ Answer: Net income = (sales – costs – depreciation – interest expense)(1-t
 Ask to :
 
 - provide formula
-- 
+
 
 Question 4: Financial statement texts of large corporations explain how they manage human capital and this project requires reading the 10K of a company. You have two options when you submit your findings after the reading. One is to write a summary report and the other is to submit ten to fifteen keywords that will be used as an input to develop a machine learning model for analyzing human capital. Which option is your choice?
 Are you willing to participate in a project that requires reading the financial statement of a company and submitting the keywords you identified for human capital management? Choices: I will write a report (Show “See Blackboard for the instructions on the report.”) I will submit keywords to be used as an input to a machine learning model (Assigning a role: If a student earned 3 out of 3, show “Congratulations! You earned a “Team Leader” status.” else, show “You earned a team member status in the project.”) 
@@ -72,6 +72,15 @@ cd mockup -- this is the mock server
 npm install -g json-server
 npx json-server db.json -p 3001 --watch
 ```
+
+
+test
+
+```
+http://localhost:3001/phrases
+```
+
+![](./img/2024-07-10-16-17-28.png)
 
 3. Run Client Locally
 
