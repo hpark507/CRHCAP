@@ -1,4 +1,5 @@
 "use client";
+// "use server";
 import React, { FormEvent, useState } from "react";
 import { signIn } from "next-auth/react";
 import { Icons } from "@/components/Icons";
@@ -12,6 +13,7 @@ const LoginForm = () => {
       username: surname,
       password: emplid,
     });
+    signIn()
   }
   return (
     <form

@@ -4,6 +4,7 @@ import EditableTable from "@/components/TicketEditableTable";
 import { Button, Box } from "@mui/material";
 
 import { authOptions } from "@/configs/next-auth";
+import { signOut } from "next-auth/react";
 
 interface Row {
   keyword: string;
@@ -36,8 +37,6 @@ const Report: React.FC<ReportProps> = ({ reportProps }) => {
   //   fetchSession();
   // }, []);
 
-  console.log("user_id", user_id);
-
   const [tables, setTables] = useState<{ [key: string]: Row[] }>({
     0: [],
     1: [],
@@ -45,48 +44,61 @@ const Report: React.FC<ReportProps> = ({ reportProps }) => {
   });
 
   return (
-    <main className="flex min-h-screen items-center justify-center">
-      <div className="flex flex-col items-center justify-center w-full shadow-lg rounded-lg px-5">
-        <div className="w-full">
-          <h1 className="text-2xl font-bold text-center">Report</h1>
-          <br />
-          <Box display="flex" justifyContent="center" mb={2}>
-            {symbols.map((symbol) => (
-              <Button
-                key={symbol}
-                variant={
-                  symbol === symbols[currentSymbolNumber] ? "outlined" : "text"
-                }
-                onClick={() =>
-                  setCurrentSymbol(symbols.findIndex((s) => s === symbol))
-                }
-                style={{ margin: "0 5px" }}
-              >
-                {symbol}
-              </Button>
-            ))}
-          </Box>
-          <p>
-            Please download the 10k report from the stock symbol mentioned and
-            provide 10 keywords research
-          </p>
-          <br />
-          <br />
-          <hr />
-          <br />
+    <div>
+      <button
+        onClick={() => signOut()}
+        className="float-right px-5 text-sm text-danger"
+        // focus:outline-none text-white bg-red-600 hover:bg-red-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2
+      >
+        <span className="text-sm">Sign Out</span>
+      </button>
+      <br />
+      <main className="flex min-h-screen items-center justify-center">
+        <br />
+        <div className="flex flex-col items-center justify-center w-full shadow-lg rounded-lg px-5 py-5">
+          <div className="w-full">
+            <h1 className="text-2xl font-bold text-center">Report</h1>
+            <br />
+            <Box display="flex" justifyContent="center" mb={2}>
+              {symbols.map((symbol) => (
+                <Button
+                  key={symbol}
+                  variant={
+                    symbol === symbols[currentSymbolNumber]
+                      ? "outlined"
+                      : "text"
+                  }
+                  onClick={() =>
+                    setCurrentSymbol(symbols.findIndex((s) => s === symbol))
+                  }
+                  style={{ margin: "0 5px" }}
+                >
+                  {symbol}
+                </Button>
+              ))}
+            </Box>
+            <p>
+              Please download the 10k report from the stock symbol mentioned and
+              provide 10 keywords research
+            </p>
+            <br />
+            <br />
+            <hr />
+            <br />
 
-          <EditableTable
-            rows={tables[currentSymbolNumber]}
-            setRows={(rows) =>
-              setTables({ ...tables, [currentSymbolNumber]: rows })
-            }
-            stockSymbol={symbols[currentSymbolNumber]}
-            user_id={user_id}
-            table_id={`${user_id}${symbols[currentSymbolNumber]}`}
-          />
+            <EditableTable
+              rows={tables[currentSymbolNumber]}
+              setRows={(rows) =>
+                setTables({ ...tables, [currentSymbolNumber]: rows })
+              }
+              stockSymbol={symbols[currentSymbolNumber]}
+              user_id={user_id}
+              table_id={`${user_id}${symbols[currentSymbolNumber]}`}
+            />
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 };
 

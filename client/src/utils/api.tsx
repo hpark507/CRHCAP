@@ -1,5 +1,6 @@
-"use client";
-const backendUrl = process.env.REACT_APP_BACKEND_URL;
+let backendUrl = process.env.API_BACKEND;
+backendUrl = 'http://127.0.0.1:8000/crhcap';
+
 
 export const getUsers = async () => {
     /** Expected format from API
@@ -22,7 +23,8 @@ export const getUsers = async () => {
 
 // Add User.
 export const addUser = async (userData: any) => {
-    console.log('backendUrl', backendUrl)
+    console.log(process.env)
+    
     const response = await fetch(`${backendUrl}/users`, {
         method: 'POST',
         headers: {
@@ -38,11 +40,11 @@ export const addUser = async (userData: any) => {
 // remove User.
 export const removeUser = async (emplid: string) => {
     console.log('doesnt really work yet')
-    // const response = await fetch(`${backendUrl}/users/${emplid}`, {
-    //     method: 'DELETE',
-    // });
+    const response = await fetch(`${backendUrl}/users/${emplid}`, {
+        method: 'DELETE',
+    });
 
-    // return response;
+    return response;
 }
 
 
@@ -100,10 +102,8 @@ export const addCategory = async (categoryString: string) => {
 }
 
 
-
-
-
 export const getUserData = async (emplid: string) => {
+    console.log(`${backendUrl}/users/${emplid}`)
     const response = await fetch(`${backendUrl}/users/${emplid}`);
     const data = await response.json();
 
@@ -113,7 +113,7 @@ export const getUserData = async (emplid: string) => {
 export const getPhrases = async (table_id: string) => {
     // const response = await fetch(`${backendUrl}/phrases?table_id=${table_id}`);
     
-    const response = await fetch(`http://localhost:3001/phrases?table_id=${table_id}`);
+    const response = await fetch(`${backendUrl}/phrases?table_id=${table_id}`);
     const data = await response.json();
     /**  Expected format from API
      * [
@@ -160,8 +160,8 @@ export const removePhrase = async (phraseId: string) => {
 
 export const removePhraseKeywordAndTable = async (keyword: string, table_id: string) => {
     // console.log(' ===== Remove Phrase =====')
-    // console.log(`http://localhost:3001/phrases?keyword=${keyword}&table_id${table_id}`);
-    const response = await fetch(`http://localhost:3001/phrases?keyword=${keyword}&table_id=${table_id}`, {
+    // console.log(`${backendUrl}/phrases?keyword=${keyword}&table_id${table_id}`);
+    const response = await fetch(`${backendUrl}/phrases?keyword=${keyword}&table_id=${table_id}`, {
         method: 'DELETE',
     });
     return response;
@@ -171,7 +171,7 @@ export const removePhraseKeywordAndTable = async (keyword: string, table_id: str
 export const addToReport = async (reportData: any) => {
     console.log(backendUrl);
     // const response = await fetch(`${backendUrl}/phrases`, {
-    const response = await fetch(`http://localhost:3001/phrases`, {
+    const response = await fetch(`${backendUrl}/phrases`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

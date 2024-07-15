@@ -31,6 +31,11 @@ const AdminReport: React.FC = () => {
 
 
           {/* Create editable table for categories (that can be modified) */}
+          <h2> Categories </h2>
+          
+
+
+
         </div>
       </div>
     </main>
