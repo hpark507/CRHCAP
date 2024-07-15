@@ -40,7 +40,11 @@ Are you willing to participate in a project that requires reading the financial 
 STEP 2: Develop codes to assign stocks and collect keywords. Test the codes using the sample keyword list Hyuna Park developed. 
 
 STEP3: Refine the NLP and ML codes using the templates and W2V models Hyuna Park developed.
+Title: Crowd Learning of New Perspectives on Investments Using the Textual Information in Financial Statements 
 
+Tasks: Develop front-end and backend codes to analyze Investments in human capital to improve stock valuation tools using text data from the SEC,
+       Develop a Learning Game to receive keywords and rankings, 
+       Develop codes to assign stocks and collect keywords. Test the codes using a sample keyword list. 
 
 # Development Notes
 
@@ -52,9 +56,6 @@ https://nodejs.org/en/download/prebuilt-installer
 ![](./img/2024-07-10-16-10-56.png)
 
 ## To install and run locally:
-
-
-
 
 1. Clone repository
 
@@ -100,7 +101,3 @@ npm run dev
 ## Notes
 
 - Stacks: Nextjs Typescript
-
-
-
-
