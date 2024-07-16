@@ -6,7 +6,7 @@ Title: Crowd Learning of New Perspectives on Investments Using the Textual Infor
 
 Tasks: Develop front-end and backend codes to analyze Investments in human capital to improve stock valuation tools using text data from the SEC,
        Develop a Learning Game to receive keywords and rankings, 
-       Develop codes to assign stocks and collect keywords. Test the codes using a sample keyword list 
+       Develop codes to assign stocks and collect keywords, Test the codes using a sample keyword list 
 
 # Development Notes
 
