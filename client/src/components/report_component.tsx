@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import EditableTable from "@/components/TicketEditableTable";
+import EditableTable from "@/components/EditableTable";
 import { Button, Box } from "@mui/material";
 
 import { authOptions } from "@/configs/next-auth";
@@ -23,19 +23,12 @@ interface ReportProps {
 
 const Report: React.FC<ReportProps> = ({ reportProps }) => {
   const { user_id, table_id } = reportProps;
-
-  const [symbols, setSymbols] = useState<string[]>(["AAPL", "GOOGL", "MSFT"]);
+  const elegibleSymbols = ["AAPL", "GOOGL", "MSFT", "AMZN", "TSLA"];
+  const [symbols, setSymbols] = useState<string[]>(["AAPL",]);
   const [currentSymbolNumber, setCurrentSymbol] = useState<number>(1);
+  const [toAdd, setToAdd] = useState<string>("");
   const [session, setSession] = useState<any>(null);
 
-  // useEffect(() => {
-  //   async function fetchSession() {
-  //     const session = await getServerSession(authOptions);
-  //     setSession(session);
-  //     console.log("session", session);
-  //   }
-  //   fetchSession();
-  // }, []);
 
   const [tables, setTables] = useState<{ [key: string]: Row[] }>({
     0: [],
@@ -77,6 +70,42 @@ const Report: React.FC<ReportProps> = ({ reportProps }) => {
                 </Button>
               ))}
             </Box>
+
+            {/* Select Dropdown. */}
+            <select
+              onChange={(e) => {
+                setToAdd(elegibleSymbols[parseInt(e.target.value)]);
+              }}
+            >
+              {elegibleSymbols.map((symbol, index) => (
+                <option key={symbol} value={index}>
+                  {symbol}
+                </option>
+              ))}
+            </select>
+
+            <Button
+              variant="outlined"
+              onClick={() => {
+                setSymbols([...symbols, toAdd]);
+                setTables({ ...tables, [symbols.length]: [] });
+
+              }}
+            >
+              Add Stock Symbol
+            </Button>
+
+            <Button
+              variant="outlined"
+              onClick={() => {
+                setSymbols(symbols.filter((s) => s !== symbols[currentSymbolNumber]));
+                setTables({ ...tables, [currentSymbolNumber]: [] });
+              }}
+            >
+              Remove Stock Symbol
+            </Button>
+
+            <br />
             <p>
               Please download the 10k report from the stock symbol mentioned and
               provide 10 keywords research

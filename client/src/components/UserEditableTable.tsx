@@ -92,15 +92,16 @@ const UserEditableTable: React.FC<EditableTableProps> = ({ rows, setRows }) => {
           <TableRow>
             <TableCell>
               <TextField
-                name="surname"
-                value={newRow.surname}
+                name="emplid"
+                value={newRow.emplid}
                 onChange={handleInputChange}
               />
             </TableCell>
+            
             <TableCell>
               <TextField
-                name="emplid"
-                value={newRow.emplid}
+                name="surname"
+                value={newRow.surname}
                 onChange={handleInputChange}
               />
             </TableCell>

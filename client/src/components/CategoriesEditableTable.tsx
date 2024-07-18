@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { addSymbol, removeSymbol } from "@/utils/api";
+import { addCategory, removeCategory} from "@/utils/api";
 
 
 import {
@@ -24,18 +24,18 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-interface TicketRow {
-  ticket: string;
+interface CategoryRow {
+  name: string;
 }
 
 interface EditableTableProps {
-  rows: TicketRow[];
-  setRows: React.Dispatch<React.SetStateAction<TicketRow[]>>;
+  rows: CategoryRow[];
+  setRows: React.Dispatch<React.SetStateAction<CategoryRow[]>>;
 }
 
 const TicketEditableTable: React.FC<EditableTableProps> = ({ rows, setRows }) => {
-  const [newRow, setNewRow] = useState<TicketRow>({
-    ticket: "",
+  const [newRow, setNewRow] = useState<CategoryRow>({
+    name: "",
   });
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,17 +46,17 @@ const TicketEditableTable: React.FC<EditableTableProps> = ({ rows, setRows }) =>
   const handleAddRow = () => {
     setRows([...rows, newRow]);
     setNewRow({
-      ticket: "",
+      name: "",
     });
 
-    addSymbol( newRow.ticket);
+    addCategory( newRow.name);
   };
 
 
   const handleDeleteRow = (index: number) => {
     const newRows = rows.filter((_, i) => i !== index);
     setRows(newRows);
-    removeSymbol(rows[index].ticket);
+    removeCategory(rows[index].name);
   };
 
   return (
@@ -67,13 +67,13 @@ const TicketEditableTable: React.FC<EditableTableProps> = ({ rows, setRows }) =>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Symbol</TableCell>
+            <TableCell>Category</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row, index) => (
             <TableRow key={index}>
-              <TableCell>{row.ticket}</TableCell>
+              <TableCell>{row.name}</TableCell>
               <TableCell>
                 <IconButton onClick={() => handleDeleteRow(index)}>
                   <DeleteIcon />
@@ -84,8 +84,8 @@ const TicketEditableTable: React.FC<EditableTableProps> = ({ rows, setRows }) =>
           <TableRow>
             <TableCell>
               <TextField
-                name="ticket"
-                value={newRow.ticket}
+                name="name"
+                value={newRow.name}
                 onChange={handleInputChange}
               />
             </TableCell>

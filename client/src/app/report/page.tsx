@@ -1,6 +1,6 @@
 "use server";
 import React, { useState } from "react";
-import EditableTable from "@/components/TicketEditableTable";
+import EditableTable from "@/components/EditableTable";
 import { Button, TextField, Box } from "@mui/material";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/configs/next-auth";

@@ -24,6 +24,7 @@ export const getUsers = async () => {
 // Add User.
 export const addUser = async (userData: any) => {
     console.log(process.env)
+    console.log('userData', userData)
     
     const response = await fetch(`${backendUrl}/users`, {
         method: 'POST',
@@ -40,7 +41,7 @@ export const addUser = async (userData: any) => {
 // remove User.
 export const removeUser = async (emplid: string) => {
     console.log('doesnt really work yet')
-    const response = await fetch(`${backendUrl}/users/${emplid}`, {
+    const response = await fetch(`${backendUrl}/users?emplid=${emplid}`, {
         method: 'DELETE',
     });
 
@@ -50,7 +51,7 @@ export const removeUser = async (emplid: string) => {
 
 // Get all symbols.
 export const getSymbols = async () => {
-    const response = await fetch(`${backendUrl}/symbols`);
+    const response = await fetch(`${backendUrl}/ticket`);
     const data = await response.json();
 
     return data;
@@ -58,12 +59,8 @@ export const getSymbols = async () => {
 
 // Add Symbol.
 export const addSymbol = async (symbolString: string) => {
-    const response = await fetch(`${backendUrl}/symbols`, {
+    const response = await fetch(`${backendUrl}/ticket?ticket_str=${symbolString}`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ id: symbolString})
     });
 
     return response;
@@ -72,34 +69,13 @@ export const addSymbol = async (symbolString: string) => {
 
 // remove Symbol.
 export const removeSymbol = async (symbol: string) => {
-    const response = await fetch(`${backendUrl}/symbols/${symbol}`, {
+    const response = await fetch(`${backendUrl}/ticket?ticket_str=${symbol}`, {
         method: 'DELETE',
     });
 
     return response;
 }
 
-
-// Get all categories.
-export const getCategories = async () => {
-    const response = await fetch(`${backendUrl}/categories`);
-    const data = await response.json();
-
-    return data;
-}
-
-// Add Category.
-export const addCategory = async (categoryString: string) => {
-    const response = await fetch(`${backendUrl}/categories`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({id: categoryString})
-    });
-
-    return response;
-}
 
 
 export const getUserData = async (emplid: string) => {
@@ -115,36 +91,6 @@ export const getPhrases = async (table_id: string) => {
     
     const response = await fetch(`${backendUrl}/phrases?table_id=${table_id}`);
     const data = await response.json();
-    /**  Expected format from API
-     * [
-            {
-                "id": "f1e0",
-                "keyword": "tesad",
-                "quote": "saasd",
-                "reason": "asda",
-                "categories": [
-                "Culture"
-                ],
-                "weight": "2",
-                "user_id": "23881380",
-                "symbol": "GOOGL",
-                "table_id": "23881380GOOGL"
-            },
-            {
-                "id": "d6c7",
-                "keyword": "Another Keyword",
-                "quote": "asdas",
-                "reason": "Reason2",
-                "categories": [
-                "Culture"
-                ],
-                "weight": "2",
-                "user_id": "23881380",
-                "symbol": "GOOGL",
-                "table_id": "23881380GOOGL"
-            }
-        ]
-     */
 
     return data;
 }
@@ -182,4 +128,40 @@ export const addToReport = async (reportData: any) => {
     return response;
 
 }
+
+
+// Categories adding removing
+
+
+// Get all categories.
+export const getCategories = async () => {
+    const response = await fetch(`${backendUrl}/category`);
+    const data = await response.json();
+
+    return data;
+}
+
+// Add Category.
+export const addCategory = async (categoryString: string) => {
+    const response = await fetch(`${backendUrl}/category`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id: categoryString})
+    });
+
+    return response;
+}
+
+
+export const removeCategory = async (category: string) => {
+    const response = await fetch(`${backendUrl}/category?name=${category}`, {
+        method: 'DELETE',
+    });
+
+    return response;
+}
+
+
 

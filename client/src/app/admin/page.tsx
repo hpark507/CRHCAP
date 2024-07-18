@@ -1,11 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import UserEditableTable from "@/components/UserEditableTable";
+import TicketEditableTable from "@/components/TicketEditableTable";
+import CategoriesEditable from "@/components/CategoriesEditableTable";
 
 import { getUsers, getSymbols } from "@/utils/api";
 
 const AdminReport: React.FC = () => {
   const [users, setUsers] = useState<{ emplid: string; surname: string }[]>([]);
+  const [symbols, setSymbols] = useState<{ ticket: string }[]>([]);
   
   // get users from api and populate.
   useEffect(() => {
@@ -13,7 +16,17 @@ const AdminReport: React.FC = () => {
       const users: { emplid: string; surname: string }[] = await getUsers();
       setUsers(users);
     }
+
+    async function fetchSymbols() {
+      const symbols: { ticket: string }[] = await getSymbols();
+      console.log("symbols", symbols);
+      setSymbols(symbols);
+    }
+
+
     fetchUsers();
+    fetchSymbols();
+
   }, []);
 
   return (
@@ -28,7 +41,7 @@ const AdminReport: React.FC = () => {
 
           {/* Create editable table for Symbol Stock and id */}
           <h2>Symbol Management</h2>
-
+          <TicketEditableTable rows={symbols} setRows={setSymbols} />
 
           {/* Create editable table for categories (that can be modified) */}
           <h2> Categories </h2>
