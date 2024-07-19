@@ -46,13 +46,13 @@ const Report: React.FC<ReportProps> = ({ reportProps }) => {
         (res: { id: string; ticket: string }) => res.ticket
       );
       setElegibleSymbols(reselegibleSymbols);
-      
+
       if (reselegibleSymbols.length > 0) {
         setToAdd(reselegibleSymbols[0]);
       }
     };
     fetchData();
-  }, []);
+  }, [user_id]);
 
   const [tables, setTables] = useState<{ [key: string]: Row[] }>({
     0: [],
@@ -88,46 +88,68 @@ const Report: React.FC<ReportProps> = ({ reportProps }) => {
                 </Button>
               ))}
             </Box>
-
-            {/* Select Dropdown. */}
-            <select
-              onChange={(e) => {
-                setToAdd(elegibleSymbols[parseInt(e.target.value)]);
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
               }}
             >
-              {elegibleSymbols.map((symbol: string, index: number) => (
-                <option key={symbol} value={index}>
-                  {symbol}
-                </option>
-              ))}
-            </select>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                {/* Select Dropdown */}
+                <select
+                  onChange={(e) => {
+                    setToAdd(elegibleSymbols[parseInt(e.target.value)]);
+                  }}
+                  value={toAdd}
+                  style={{ marginRight: "10px" }}
+                >
+                  {elegibleSymbols.map((symbol, index) => (
+                    <option key={symbol} value={index}>
+                      {symbol}
+                    </option>
+                  ))}
+                </select>
 
-            <Button
-              variant="outlined"
-              onClick={() => {
-                const new_symbols = [...symbols, toAdd];
-                update_user_stock(new_symbols, user_id);
-                setSymbols(new_symbols);
-                setTables({ ...tables, [symbols.length]: [] });
-              }}
-            >
-              Add Stock Symbol
-            </Button>
+                {/* Add Stock Symbol Button */}
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => {
+                    const newSymbols = [...symbols, toAdd];
+                    update_user_stock(newSymbols, user_id);
+                    setSymbols(newSymbols);
+                    setTables((prevTables) => ({
+                      ...prevTables,
+                      [symbols.length]: [],
+                    }));
+                  }}
+                  style={{ marginRight: "10px" }}
+                >
+                  Add Stock Symbol
+                </Button>
+              </div>
 
-            <Button
-              variant="outlined"
-              onClick={() => {
-                const new_symbols = symbols.filter(
-                  (symbol) => symbol !== symbols[currentSymbolNumber]
-                );
-                update_user_stock(new_symbols, user_id);
-                setSymbols(new_symbols);
-                setTables({ ...tables, [currentSymbolNumber]: [] });
-              }}
-            >
-              Remove Stock Symbol
-            </Button>
-
+              {/* Remove Stock Symbol Button */}
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={() => {
+                  const newSymbols = symbols.filter(
+                    (symbol) => symbol !== symbols[currentSymbolNumber]
+                  );
+                  update_user_stock(newSymbols, user_id);
+                  setSymbols(newSymbols);
+                  setTables((prevTables) => {
+                    const newTables = { ...prevTables };
+                    delete newTables[currentSymbolNumber];
+                    return newTables;
+                  });
+                }}
+              >
+                Remove Stock Symbol
+              </Button>
+            </div>
             <br />
             <p>
               Please download the 10k report from the stock symbol mentioned and
