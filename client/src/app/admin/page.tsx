@@ -8,6 +8,9 @@ import Header from "@/components/Header";
 import { getUsers, getSymbols, getCategories } from "@/utils/api";
 import { signOut } from "next-auth/react";
 
+// get session.
+import { useSession } from "next-auth/react";
+
 const AdminReport: React.FC = () => {
   const [users, setUsers] = useState<{ emplid: string; surname: string }[]>([]);
   const [symbols, setSymbols] = useState<{ ticket: string }[]>([]);
@@ -35,6 +38,8 @@ const AdminReport: React.FC = () => {
     fetchCategories();
   }, []);
 
+  const { data: session, status } = useSession();
+  
   return (
     <main className="flex min-h-screen items-center justify-center">
       <div className="flex flex-col items-center justify-center w-full shadow-lg rounded-lg px-5">
