@@ -67,8 +67,7 @@ const UserEditableTable: React.FC<EditableTableProps> = ({ rows, setRows }) => {
 
   return (
     <TableContainer
-      component={Paper}
-      style={{ minHeight: "30em", paddingLeft: "16px", paddingRight: "16px" }}
+      style={{ paddingLeft: "16px", paddingRight: "16px" }}
     >
       <Table>
         <TableHead>

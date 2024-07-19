@@ -33,7 +33,7 @@ interface EditableTableProps {
   setRows: React.Dispatch<React.SetStateAction<CategoryRow[]>>;
 }
 
-const TicketEditableTable: React.FC<EditableTableProps> = ({ rows, setRows }) => {
+const CategoryEditableTable: React.FC<EditableTableProps> = ({ rows, setRows }) => {
   const [newRow, setNewRow] = useState<CategoryRow>({
     name: "",
   });
@@ -61,8 +61,7 @@ const TicketEditableTable: React.FC<EditableTableProps> = ({ rows, setRows }) =>
 
   return (
     <TableContainer
-      component={Paper}
-      style={{ minHeight: "30em", paddingLeft: "16px", paddingRight: "16px" }}
+      style={{ paddingLeft: "16px", paddingRight: "16px" }}
     >
       <Table>
         <TableHead>
@@ -102,4 +101,4 @@ const TicketEditableTable: React.FC<EditableTableProps> = ({ rows, setRows }) =>
   );
 };
 
-export default TicketEditableTable;
+export default CategoryEditableTable;

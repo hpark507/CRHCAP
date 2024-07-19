@@ -3,8 +3,11 @@ import React, { useState, useEffect } from "react";
 import EditableTable from "@/components/EditableTable";
 import { Button, Box } from "@mui/material";
 
+import { getUser, update_user_stock, getSymbols } from "@/utils/api";
+
 import { authOptions } from "@/configs/next-auth";
 import { signOut } from "next-auth/react";
+import Header from "./Header";
 
 interface Row {
   keyword: string;
@@ -23,12 +26,33 @@ interface ReportProps {
 
 const Report: React.FC<ReportProps> = ({ reportProps }) => {
   const { user_id, table_id } = reportProps;
-  const elegibleSymbols = ["AAPL", "GOOGL", "MSFT", "AMZN", "TSLA"];
-  const [symbols, setSymbols] = useState<string[]>(["AAPL",]);
-  const [currentSymbolNumber, setCurrentSymbol] = useState<number>(1);
+  const [symbols, setSymbols] = useState<string[]>([]);
+  const [currentSymbolNumber, setCurrentSymbol] = useState<number>(0);
   const [toAdd, setToAdd] = useState<string>("");
   const [session, setSession] = useState<any>(null);
+  const [elegibleSymbols, setElegibleSymbols] = useState<string[]>([]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const session = await getUser(user_id);
+      setSession(session);
+      console.log("session", session);
+      const stock_names = session?.stock_names;
+      if (stock_names) {
+        setSymbols(stock_names);
+      }
+      const symbolsRes = await getSymbols();
+      const reselegibleSymbols = symbolsRes.map(
+        (res: { id: string; ticket: string }) => res.ticket
+      );
+      setElegibleSymbols(reselegibleSymbols);
+      
+      if (reselegibleSymbols.length > 0) {
+        setToAdd(reselegibleSymbols[0]);
+      }
+    };
+    fetchData();
+  }, []);
 
   const [tables, setTables] = useState<{ [key: string]: Row[] }>({
     0: [],
@@ -38,19 +62,13 @@ const Report: React.FC<ReportProps> = ({ reportProps }) => {
 
   return (
     <div>
-      <button
-        onClick={() => signOut()}
-        className="float-right px-5 text-sm text-danger"
-        // focus:outline-none text-white bg-red-600 hover:bg-red-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2
-      >
-        <span className="text-sm">Sign Out</span>
-      </button>
       <br />
       <main className="flex min-h-screen items-center justify-center">
         <br />
         <div className="flex flex-col items-center justify-center w-full shadow-lg rounded-lg px-5 py-5">
           <div className="w-full">
-            <h1 className="text-2xl font-bold text-center">Report</h1>
+            <br />
+            <Header></Header>
             <br />
             <Box display="flex" justifyContent="center" mb={2}>
               {symbols.map((symbol) => (
@@ -77,7 +95,7 @@ const Report: React.FC<ReportProps> = ({ reportProps }) => {
                 setToAdd(elegibleSymbols[parseInt(e.target.value)]);
               }}
             >
-              {elegibleSymbols.map((symbol, index) => (
+              {elegibleSymbols.map((symbol: string, index: number) => (
                 <option key={symbol} value={index}>
                   {symbol}
                 </option>
@@ -87,9 +105,10 @@ const Report: React.FC<ReportProps> = ({ reportProps }) => {
             <Button
               variant="outlined"
               onClick={() => {
-                setSymbols([...symbols, toAdd]);
+                const new_symbols = [...symbols, toAdd];
+                update_user_stock(new_symbols, user_id);
+                setSymbols(new_symbols);
                 setTables({ ...tables, [symbols.length]: [] });
-
               }}
             >
               Add Stock Symbol
@@ -98,7 +117,11 @@ const Report: React.FC<ReportProps> = ({ reportProps }) => {
             <Button
               variant="outlined"
               onClick={() => {
-                setSymbols(symbols.filter((s) => s !== symbols[currentSymbolNumber]));
+                const new_symbols = symbols.filter(
+                  (symbol) => symbol !== symbols[currentSymbolNumber]
+                );
+                update_user_stock(new_symbols, user_id);
+                setSymbols(new_symbols);
                 setTables({ ...tables, [currentSymbolNumber]: [] });
               }}
             >
@@ -122,7 +145,7 @@ const Report: React.FC<ReportProps> = ({ reportProps }) => {
               }
               stockSymbol={symbols[currentSymbolNumber]}
               user_id={user_id}
-              table_id={`${user_id}${symbols[currentSymbolNumber]}`}
+              table_name={`${user_id}${symbols[currentSymbolNumber]}`}
             />
           </div>
         </div>

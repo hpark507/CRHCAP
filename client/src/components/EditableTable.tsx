@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { getCategories } from "@/utils/api";
 
 import { addToReport, getPhrases, removePhraseKeywordAndTable } from "@/utils/api";
 import {
@@ -36,7 +37,7 @@ interface EditableTableProps {
   setRows: React.Dispatch<React.SetStateAction<Row[]>>;
   stockSymbol: string;
   user_id: string;
-  table_id: string;
+  table_name: string;
 }
 
 const EditableTable: React.FC<EditableTableProps> = ({
@@ -44,7 +45,7 @@ const EditableTable: React.FC<EditableTableProps> = ({
   setRows,
   stockSymbol,
   user_id,
-  table_id,
+  table_name,
 }) => {
   const [newRow, setNewRow] = useState<Row>({
     keyword: "",
@@ -62,6 +63,19 @@ const EditableTable: React.FC<EditableTableProps> = ({
   const handleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setNewRow({ ...newRow, categories: event.target.value as string[] });
   };
+
+  const [categories, setCategories] = useState<string[]>([]);
+
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const categoriesRes = await getCategories();
+      const categories = categoriesRes.map((category: { id: string, name: string; }) => category.name);
+      setCategories(categories);
+    };
+
+    fetchCategories();
+  }, []); // Add dependencies if necessary
 
   const handleAddRow = () => {
     setRows([...rows, newRow]);
@@ -82,12 +96,13 @@ const EditableTable: React.FC<EditableTableProps> = ({
       weight: newRow.weight,
       user_id: user_id,
       symbol: stockSymbol,
-      table_id: table_id,
+      table_name: table_name,
     });
   };
 
+
   const handleReceiveData = async () => {
-    const data = await getPhrases(table_id);
+    const data = await getPhrases(table_name);
     // console.log("Data: ", data)
     const newsRowsData = [];
     for (const row of data) {
@@ -104,12 +119,12 @@ const EditableTable: React.FC<EditableTableProps> = ({
 
   useEffect(() => {
     handleReceiveData();
-  }, [table_id, user_id, stockSymbol]);
+  }, [table_name, user_id, stockSymbol]);
 
   const handleDeleteRow = (index: number) => {
     const newRows = rows.filter((_, i) => i !== index);
     setRows(newRows);
-    removePhraseKeywordAndTable(rows[index].keyword, table_id);
+    removePhraseKeywordAndTable(rows[index].keyword, table_name);
   };
 
   return (
@@ -167,7 +182,6 @@ const EditableTable: React.FC<EditableTableProps> = ({
                   value={newRow.categories}
                   style={{ minWidth: "10em" }}
                   onChange={(e) => {
-                    console.log("changed");
 
                     if (e.target.value) {
                       setNewRow({
@@ -178,19 +192,16 @@ const EditableTable: React.FC<EditableTableProps> = ({
                   }}
                   renderValue={(selected) => (selected as string[]).join(", ")}
                 >
-                  <MenuItem value="Leadership">
-                    <Checkbox
-                      checked={newRow.categories.indexOf("Leadership") > -1}
-                    />
-                    <ListItemText primary="Leadership" />
-                  </MenuItem>
-                  <MenuItem value="Culture">
-                    <Checkbox
-                      checked={newRow.categories.indexOf("Culture") > -1}
-                    />
-                    <ListItemText primary="Culture" />
-                  </MenuItem>
-                  {/* Add more categories as needed */}
+                  {/* Map categories */}
+                  {categories.map((category) => (
+                    <MenuItem key={category} value={category}>
+                      <Checkbox
+                        checked={newRow.categories.indexOf(category) > -1}
+                      />
+                      <ListItemText primary={category} />
+                    </MenuItem>
+                  ))}
+                  
                 </Select>
               </FormControl>
             </TableCell>

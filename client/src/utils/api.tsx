@@ -21,11 +21,10 @@ export const getUsers = async () => {
 }
 
 
+
+
 // Add User.
-export const addUser = async (userData: any) => {
-    console.log(process.env)
-    console.log('userData', userData)
-    
+export const addUser = async (userData: any) => {    
     const response = await fetch(`${backendUrl}/users`, {
         method: 'POST',
         headers: {
@@ -37,16 +36,42 @@ export const addUser = async (userData: any) => {
     return response;
 }
 
+export const update_user_stock = async (stock_names: string[], emplid: string) => {
+    const response = await fetch(`${backendUrl}/users_stock`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({stock_names: stock_names, emplid: emplid})
+    });
+    return response;
+}
 
 // remove User.
 export const removeUser = async (emplid: string) => {
-    console.log('doesnt really work yet')
     const response = await fetch(`${backendUrl}/users?emplid=${emplid}`, {
         method: 'DELETE',
     });
 
     return response;
 }
+
+export const getUser = async (emplid: string) => {
+    const response = await fetch(`${backendUrl}/users/${emplid}`);
+    const data = await response.json();
+
+    return data;
+}
+
+
+export const addSymbolTab = async (symbol: string, tab: string) => {
+    const response = await fetch(`${backendUrl}/ticket?ticket_str=${symbol}&tab=${tab}`, {
+        method: 'POST',
+    });
+
+    return response;
+}
+
 
 
 // Get all symbols.
@@ -86,10 +111,10 @@ export const getUserData = async (emplid: string) => {
     return data;
 }
 
-export const getPhrases = async (table_id: string) => {
-    // const response = await fetch(`${backendUrl}/phrases?table_id=${table_id}`);
+export const getPhrases = async (table_name: string) => {
+    // const response = await fetch(`${backendUrl}/phrases?table_name=${table_name}`);
     
-    const response = await fetch(`${backendUrl}/phrases?table_id=${table_id}`);
+    const response = await fetch(`${backendUrl}/phrases?table_name=${table_name}`);
     const data = await response.json();
 
     return data;
@@ -104,10 +129,8 @@ export const removePhrase = async (phraseId: string) => {
     return response;
 }
 
-export const removePhraseKeywordAndTable = async (keyword: string, table_id: string) => {
-    // console.log(' ===== Remove Phrase =====')
-    // console.log(`${backendUrl}/phrases?keyword=${keyword}&table_id${table_id}`);
-    const response = await fetch(`${backendUrl}/phrases?keyword=${keyword}&table_id=${table_id}`, {
+export const removePhraseKeywordAndTable = async (keyword: string, table_name: string) => {
+    const response = await fetch(`${backendUrl}/phrases?keyword=${keyword}&table_name=${table_name}`, {
         method: 'DELETE',
     });
     return response;
@@ -143,12 +166,11 @@ export const getCategories = async () => {
 
 // Add Category.
 export const addCategory = async (categoryString: string) => {
-    const response = await fetch(`${backendUrl}/category`, {
+    const response = await fetch(`${backendUrl}/category?name=${categoryString}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({id: categoryString})
+        }
     });
 
     return response;
