@@ -1,5 +1,4 @@
-let backendUrl = process.env.API_BACKEND;
-backendUrl = 'http://127.0.0.1:8000/crhcap';
+const backendUrl = 'https://crvmb5tnnr.us-east-1.awsapprunner.com/crhcap'
 
 
 export const getUsers = async () => {

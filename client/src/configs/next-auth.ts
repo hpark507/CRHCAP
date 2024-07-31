@@ -1,3 +1,4 @@
+const backendUrl = 'https://crvmb5tnnr.us-east-1.awsapprunner.com/crhcap';
 import { User, type NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -22,39 +23,22 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials): Promise<User | null> {
+
         // Validate credentials with your database here
 
-        // console.log("==== Credentials ====")
-        // console.log(credentials)
-
         // Find in users json:
-        // const user = users.find((u: { name: string | undefined; }) => u.name === credentials?.username.toLocaleLowerCase());
         if (!credentials?.username || !credentials?.password) {
           console.log("==== No Credentials ====")
           return null;
         }
 
-        // console.log(`==== Getting users with EMPLID ${credentials.password} ====`)
-        // console.log(`${backendUrl}/users/${emplid}`)
-
-        const userData = await getUserData(credentials.password);
-        if (!userData) {
-          return null;
-        }
-        
-        if (userData.surname !== credentials.username) {
-          return null;
-        }
-        // return userData
-        const res = {
-          id: userData.id, // Add the required 'id' property
-          name: userData.surname,
-          email: userData.emplid,
-          image: userData?.image??"",
+        return {
+          id: '72f56ca7-03fc-40db-adfc-b5d22b35ab71',
+          name: credentials.username,
+          email: credentials.password,
+          image: ''
         };
-        console.log("==== User Data ====")
-        console.log(userData, res)
-        return res;
+
       },
     }),
   ],

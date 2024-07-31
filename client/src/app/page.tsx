@@ -8,7 +8,7 @@ import { authOptions } from "@/configs/next-auth";
 import { useSession, SessionProvider } from "next-auth/react";
 import Report from "@/components/report_component";
 
-export default async function Home() {
+export default function Home() {
   // const session = await getServerSession(authOptions);
   const { data: session , status} = useSession();
   console.log("session", session);

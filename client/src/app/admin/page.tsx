@@ -4,9 +4,7 @@ import UserEditableTable from "@/components/UserEditableTable";
 import TicketEditableTable from "@/components/TicketEditableTable";
 import CategoryEditableTable from "@/components/CategoriesEditableTable";
 import Header from "@/components/Header";
-
 import { getUsers, getSymbols, getCategories } from "@/utils/api";
-import { signOut } from "next-auth/react";
 
 // get session.
 import { useSession } from "next-auth/react";
@@ -39,13 +37,16 @@ const AdminReport: React.FC = () => {
   }, []);
 
   const { data: session, status } = useSession();
+  const user = session?.user;
+  // console.log("admin session", session);
+  // console.log('admin user session', session?.user);
   
   return (
     <main className="flex min-h-screen items-center justify-center">
       <div className="flex flex-col items-center justify-center w-full shadow-lg rounded-lg px-5">
         <div>
           <br />
-          <Header />
+          <Header emplid={user?.email ?? ""} surname={user?.name ?? ""} />
           <br />
           <h1 className="text-2xl font-bold text-center">Admin Management</h1>
           <br />

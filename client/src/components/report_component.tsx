@@ -31,12 +31,12 @@ const Report: React.FC<ReportProps> = ({ reportProps }) => {
   const [toAdd, setToAdd] = useState<string>("");
   const [session, setSession] = useState<any>(null);
   const [elegibleSymbols, setElegibleSymbols] = useState<string[]>([]);
+  const [user, setUser] = useState<any>({});
 
   useEffect(() => {
     const fetchData = async () => {
       const session = await getUser(user_id);
       setSession(session);
-      console.log("session", session);
       const stock_names = session?.stock_names;
       if (stock_names) {
         setSymbols(stock_names);
@@ -68,7 +68,7 @@ const Report: React.FC<ReportProps> = ({ reportProps }) => {
         <div className="flex flex-col items-center justify-center w-full shadow-lg rounded-lg px-5 py-5">
           <div className="w-full">
             <br />
-            <Header></Header>
+            <Header emplid={session?.emplid} surname={session?.surname} />
             <br />
             <Box display="flex" justifyContent="center" mb={2}>
               {symbols.map((symbol) => (
