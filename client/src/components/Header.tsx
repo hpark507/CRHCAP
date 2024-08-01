@@ -29,7 +29,7 @@ const Header: React.FC<HeaderProps> = ({ emplid, surname, verifyForSurname }) =>
           window.location.href = "/";
         }
       }
-    }, 5000);
+    }, 1000);
 
     // Cleanup function to clear the timeout if component unmounts or values change
     return () => clearTimeout(timer);
