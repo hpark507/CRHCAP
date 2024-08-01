@@ -6,6 +6,7 @@ import CategoryEditableTable from "@/components/CategoriesEditableTable";
 import Header from "@/components/Header";
 import { getUsers, getSymbols, getCategories } from "@/utils/api";
 
+
 // get session.
 import { useSession } from "next-auth/react";
 
@@ -13,6 +14,7 @@ const AdminReport: React.FC = () => {
   const [users, setUsers] = useState<{ emplid: string; surname: string }[]>([]);
   const [symbols, setSymbols] = useState<{ ticket: string }[]>([]);
   const [categories, setCategories] = useState<{ name: string }[]>([]);
+
 
   // get users from api and populate.
   useEffect(() => {
@@ -34,19 +36,19 @@ const AdminReport: React.FC = () => {
     fetchUsers();
     fetchSymbols();
     fetchCategories();
+
   }, []);
 
   const { data: session, status } = useSession();
   const user = session?.user;
-  // console.log("admin session", session);
-  // console.log('admin user session', session?.user);
-  
+
+
   return (
     <main className="flex min-h-screen items-center justify-center">
       <div className="flex flex-col items-center justify-center w-full shadow-lg rounded-lg px-5">
         <div>
           <br />
-          <Header emplid={user?.email ?? ""} surname={user?.name ?? ""} />
+          <Header emplid={user?.email ?? ""} surname={user?.name ?? ""} verifyForSurname={["admin"]} />
           <br />
           <h1 className="text-2xl font-bold text-center">Admin Management</h1>
           <br />

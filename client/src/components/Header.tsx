@@ -8,9 +8,10 @@ import { signOut } from "next-auth/react";
 interface HeaderProps {
   emplid?: string;
   surname?: string;
+  verifyForSurname?: string[];
 }
 
-const Header: React.FC<HeaderProps> = ({ emplid, surname }) => {
+const Header: React.FC<HeaderProps> = ({ emplid, surname, verifyForSurname }) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -18,7 +19,17 @@ const Header: React.FC<HeaderProps> = ({ emplid, surname }) => {
         setOpen(true);
         signOut();
       }
-    }, 200);
+      if (verifyForSurname && verifyForSurname.length > 0) {
+        // console.log("verifyForSurname", verifyForSurname, surname, verifyForSurname.includes(surname ?? ""));
+        if (!verifyForSurname.includes(surname ?? "")) {
+          console.log("surname is not valid");
+          // setOpen(true);
+          // signOut();
+          // go to /
+          // window.location.href = "/";
+        }
+      }
+    }, 1000);
 
     // Cleanup function to clear the timeout if component unmounts or values change
     return () => clearTimeout(timer);

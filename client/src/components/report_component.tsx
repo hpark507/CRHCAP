@@ -52,7 +52,7 @@ const Report: React.FC<ReportProps> = ({ reportProps }) => {
       }
     };
     fetchData();
-  }, [user_id]);
+  }, []);
 
   const [tables, setTables] = useState<{ [key: string]: Row[] }>({
     0: [],
