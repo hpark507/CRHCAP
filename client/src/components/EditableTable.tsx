@@ -2,7 +2,11 @@
 import React, { useState, useEffect } from "react";
 import { getCategories } from "@/utils/api";
 
-import { addToReport, getPhrases, removePhraseKeywordAndTable } from "@/utils/api";
+import {
+  addToReport,
+  getPhrases,
+  removePhraseKeywordAndTable,
+} from "@/utils/api";
 import {
   Table,
   TableBody,
@@ -66,11 +70,12 @@ const EditableTable: React.FC<EditableTableProps> = ({
 
   const [categories, setCategories] = useState<string[]>([]);
 
-
   useEffect(() => {
     const fetchCategories = async () => {
       const categoriesRes = await getCategories();
-      const categories = categoriesRes.map((category: { id: string, name: string; }) => category.name);
+      const categories = categoriesRes.map(
+        (category: { id: string; name: string }) => category.name
+      );
       setCategories(categories);
     };
 
@@ -100,7 +105,6 @@ const EditableTable: React.FC<EditableTableProps> = ({
     });
   };
 
-
   const handleReceiveData = async () => {
     const data = await getPhrases(table_name);
     // console.log("Data: ", data)
@@ -114,7 +118,7 @@ const EditableTable: React.FC<EditableTableProps> = ({
         weight: row?.weight ?? 0,
       });
     }
-    setRows( newsRowsData);
+    setRows(newsRowsData);
   };
 
   useEffect(() => {
@@ -133,103 +137,107 @@ const EditableTable: React.FC<EditableTableProps> = ({
       style={{ minHeight: "30em", paddingLeft: "16px", paddingRight: "16px" }}
     >
       <h2>{stockSymbol}</h2>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Keyword</TableCell>
-            <TableCell>Reason</TableCell>
-            <TableCell>Categories</TableCell>
-            <TableCell>Quote</TableCell>
-            <TableCell>Weight</TableCell>
-            <TableCell>Actions</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row, index) => (
-            <TableRow key={index}>
-              <TableCell>{row.keyword}</TableCell>
-              <TableCell>{row.reason}</TableCell>
-              <TableCell>{row.categories.join(", ")}</TableCell>
-              <TableCell>{row.quote}</TableCell>
-              <TableCell>{row.weight}</TableCell>
+      {stockSymbol && stockSymbol != "" && (
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Keyword</TableCell>
+              <TableCell>Reason</TableCell>
+              <TableCell>Categories</TableCell>
+              <TableCell>Quote</TableCell>
+              <TableCell>Weight</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows?.map((row, index) => (
+              <TableRow key={index}>
+                <TableCell>{row.keyword}</TableCell>
+                <TableCell>{row.reason}</TableCell>
+                <TableCell>{row.categories.join(", ")}</TableCell>
+                <TableCell>{row.quote}</TableCell>
+                <TableCell>{row.weight}</TableCell>
+                <TableCell>
+                  <IconButton onClick={() => handleDeleteRow(index)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+            <TableRow>
               <TableCell>
-                <IconButton onClick={() => handleDeleteRow(index)}>
-                  <DeleteIcon />
-                </IconButton>
+                <TextField
+                  name="keyword"
+                  value={newRow.keyword}
+                  onChange={handleInputChange}
+                />
+              </TableCell>
+              <TableCell>
+                <TextField
+                  name="reason"
+                  value={newRow.reason}
+                  onChange={handleInputChange}
+                />
+              </TableCell>
+              <TableCell>
+                <FormControl>
+                  <InputLabel>Categories</InputLabel>
+                  <Select
+                    multiple
+                    value={newRow.categories}
+                    style={{ minWidth: "10em" }}
+                    onChange={(e) => {
+                      if (e.target.value) {
+                        setNewRow({
+                          ...newRow,
+                          categories: e.target.value as string[],
+                        });
+                      }
+                    }}
+                    renderValue={(selected) =>
+                      (selected as string[]).join(", ")
+                    }
+                  >
+                    {/* Map categories */}
+                    {categories.map((category) => (
+                      <MenuItem key={category} value={category}>
+                        <Checkbox
+                          checked={newRow.categories.indexOf(category) > -1}
+                        />
+                        <ListItemText primary={category} />
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </TableCell>
+              <TableCell>
+                <TextField
+                  style={{ minWidth: "10em" }}
+                  multiline
+                  name="quote"
+                  value={newRow.quote}
+                  onChange={handleInputChange}
+                />
+              </TableCell>
+              <TableCell>
+                <TextField
+                  name="weight"
+                  type="number"
+                  value={newRow.weight}
+                  onChange={handleInputChange}
+                />
+              </TableCell>
+              <TableCell>
+                <Button onClick={handleAddRow} startIcon={<AddIcon />}>
+                  Add
+                </Button>
               </TableCell>
             </TableRow>
-          ))}
-          <TableRow>
-            <TableCell>
-              <TextField
-                name="keyword"
-                value={newRow.keyword}
-                onChange={handleInputChange}
-              />
-            </TableCell>
-            <TableCell>
-              <TextField
-                name="reason"
-                value={newRow.reason}
-                onChange={handleInputChange}
-              />
-            </TableCell>
-            <TableCell>
-              <FormControl>
-                <InputLabel>Categories</InputLabel>
-                <Select
-                  multiple
-                  value={newRow.categories}
-                  style={{ minWidth: "10em" }}
-                  onChange={(e) => {
+          </TableBody>
+        </Table>
+      )}
 
-                    if (e.target.value) {
-                      setNewRow({
-                        ...newRow,
-                        categories: e.target.value as string[],
-                      });
-                    }
-                  }}
-                  renderValue={(selected) => (selected as string[]).join(", ")}
-                >
-                  {/* Map categories */}
-                  {categories.map((category) => (
-                    <MenuItem key={category} value={category}>
-                      <Checkbox
-                        checked={newRow.categories.indexOf(category) > -1}
-                      />
-                      <ListItemText primary={category} />
-                    </MenuItem>
-                  ))}
-                  
-                </Select>
-              </FormControl>
-            </TableCell>
-            <TableCell>
-              <TextField
-                style={{ minWidth: "10em" }}
-                multiline
-                name="quote"
-                value={newRow.quote}
-                onChange={handleInputChange}
-              />
-            </TableCell>
-            <TableCell>
-              <TextField
-                name="weight"
-                type="number"
-                value={newRow.weight}
-                onChange={handleInputChange}
-              />
-            </TableCell>
-            <TableCell>
-              <Button onClick={handleAddRow} startIcon={<AddIcon />}>
-                Add
-              </Button>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+      {!stockSymbol && <h3>Please select or add a stock symbol report</h3>}
     </TableContainer>
   );
 };

@@ -70,7 +70,7 @@ const CategoryEditableTable: React.FC<EditableTableProps> = ({ rows, setRows }) 
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row, index) => (
+          {rows?.map((row, index) => (
             <TableRow key={index}>
               <TableCell>{row.name}</TableCell>
               <TableCell>

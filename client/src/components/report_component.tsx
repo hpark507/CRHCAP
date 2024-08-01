@@ -101,11 +101,13 @@ const Report: React.FC<ReportProps> = ({ reportProps }) => {
                   onChange={(e) => {
                     setToAdd(elegibleSymbols[parseInt(e.target.value)]);
                   }}
-                  value={toAdd}
+                  // value={toAdd}
                   style={{ marginRight: "10px" }}
                 >
                   {elegibleSymbols.map((symbol, index) => (
-                    <option key={symbol} value={index}>
+                    <option key={symbol} value={index}
+                    // onSelect={() => setToAdd(symbol)}
+                    >
                       {symbol}
                     </option>
                   ))}
