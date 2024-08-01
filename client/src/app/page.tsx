@@ -1,27 +1,25 @@
 "use client"
 import Link from "next/link";
-import UserInfo from "@/components/UserInfo";
-
-import { authOptions } from "@/configs/next-auth";
-// import { getServerSession } from "next-auth/next";
-// import { getServerSession } from "next-auth/client";
 import { useSession, SessionProvider } from "next-auth/react";
 import Report from "@/components/report_component";
+import { useEffect } from "react";
 
 export default function Home() {
   // const session = await getServerSession(authOptions);
   const { data: session , status} = useSession();
-  console.log("session", session);
-  console.log("status", status);
-  const user = session?.user;
+  // let user = "";
+  // useEffect(() => {
+  //   console.log("Session: ", session);
+  //   cons user = session?.user;
+  // }, [session]);
 
   return (
     <main className="flex min-h-screen items-center justify-center">
-      {user ? (
+      {session?.user ? (
         // <UserInfo user={user} />
         <Report
           reportProps={{
-            user_id: user?.email as string,
+            user_id: session?.user?.email as string,
             table_id: "1",
           }}
         />

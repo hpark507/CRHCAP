@@ -10,7 +10,7 @@ interface Row {
   weight: number;
 }
 
-const ReportExport: React.FC = async () => {
+const ReportExport: React.FC = () => {
   const { data: session , status} = useSession();
   const user = session?.user;
 

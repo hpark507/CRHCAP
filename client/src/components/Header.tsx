@@ -23,13 +23,13 @@ const Header: React.FC<HeaderProps> = ({ emplid, surname, verifyForSurname }) =>
         // console.log("verifyForSurname", verifyForSurname, surname, verifyForSurname.includes(surname ?? ""));
         if (!verifyForSurname.includes(surname ?? "")) {
           console.log("surname is not valid");
-          // setOpen(true);
-          // signOut();
+          setOpen(true);
+          signOut();
           // go to /
-          // window.location.href = "/";
+          window.location.href = "/";
         }
       }
-    }, 1000);
+    }, 5000);
 
     // Cleanup function to clear the timeout if component unmounts or values change
     return () => clearTimeout(timer);
