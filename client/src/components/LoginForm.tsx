@@ -2,41 +2,59 @@
 // "use server";
 import React, { FormEvent, useState } from "react";
 import { signIn } from "next-auth/react";
-import { Icons } from "@/components/Icons";
+import { getUserData } from "@/utils/api";
+
+import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
+
 
 const LoginForm = () => {
   const [emplid, setEmplid] = useState<undefined | string>("");
+  const [open, setOpen] = useState(false);
   const [surname, setSurname] = useState<undefined | string>("");
-  function handleSubmit(e: FormEvent) {
+
+
+  const handleClose = (
+    event: React.SyntheticEvent | Event,
+    reason?: SnackbarCloseReason
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    // Check here if the surname with specific emplid exists.
+    const user_data = await getUserData(emplid as string);
+    if (!user_data) {
+      return;
+    }
+    if (user_data.surname !== surname) {
+      return;
+    }
+
+
     signIn("credentials", {
       username: surname,
       password: emplid,
     });
-    signIn()
+    // signIn()
   }
   return (
     <form
       onSubmit={handleSubmit}
       className="flex flex-col gap-2 p-5 max-w-xs w-full bg-white shadow-lg rounded-lg"
     >
-      {/* <button
-        onClick={() => signIn("github")}
-        type="button"
-        className="flex justify-center gap-4 bg-slate-800 my-4 text-white p-3 rounded-lg hover:bg-slate-700"
-      >
-        <Icons.github />
-        <span> Sign in with Github</span>
-      </button>
-      <div className="relative my-3">
-        <hr />
-        <small className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-white w-8 text-center">
-          Or
-        </small>
-      </div> */}
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message="Logging Out"
+      />
       <div className="flex flex-col gap-2">
         <div className="flex flex-col gap-2">
-          <label htmlFor="name">EMPLID</label>
+          <label htmlFor="name">ID</label>
           <input
             onChange={(e) => setEmplid(e.target.value)}
             value={emplid}

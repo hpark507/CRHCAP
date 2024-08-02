@@ -2,7 +2,7 @@ import React from "react";
 
 import Button from "@mui/material/Button";
 import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { signOut } from "next-auth/react";
 interface HeaderProps {
@@ -12,10 +12,17 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ emplid, surname, verifyForSurname }) => {
+  const [called, setCalled] = useState(false);
 
-  useEffect(() => {
+
+  useEffect(() =>  {
+    new Promise((resolve) => setTimeout(resolve, 2000));
     const timer = setTimeout(() => {
       if ((!emplid && !surname) || (emplid === "" && surname === "")) {
+        if (!called) {
+          setCalled(true);
+          return;
+        }
         setOpen(true);
         signOut();
       }
