@@ -28,9 +28,11 @@ const LoginForm = () => {
     // Check here if the surname with specific emplid exists.
     const user_data = await getUserData(emplid as string);
     if (!user_data) {
+      setOpen(true);
       return;
     }
     if (user_data.surname !== surname) {
+      setOpen(true);
       return;
     }
 
