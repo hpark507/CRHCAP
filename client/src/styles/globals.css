@@ -5,7 +5,12 @@
 
 .header-window{
     /* min width of 50% */
-    min-width: 50%;
+    min-width: 50em;
+}
+
+
+.tab-window{
+    min-height: 40em;
 }
 
 

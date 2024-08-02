@@ -61,7 +61,7 @@ const Header: React.FC<HeaderProps> = ({
       {emplid ? (
         <div className="header-window flex justify-between items-center">
           <div>
-            emplid: {emplid && <span>{emplid} </span>} | surname:{" "}
+            id: {emplid && <span>{emplid} </span>} | {" "}
             {surname && <span>{surname}</span>}
           </div>
           {/* <Button onClick={handleClick}>Open Snackbar</Button> */}
@@ -82,7 +82,7 @@ const Header: React.FC<HeaderProps> = ({
           </button>
         </div>
       ) : (
-        <div className="flex justify-end items-center">
+        <div className=" header-window flex justify-end items-center">
           <button
             className="text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5"
             onClick={() => goToLogin()}

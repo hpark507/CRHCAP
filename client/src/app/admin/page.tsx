@@ -6,6 +6,12 @@ import CategoryEditableTable from "@/components/CategoriesEditableTable";
 import Header from "@/components/Header";
 import { getUsers, getSymbols, getCategories } from "@/utils/api";
 
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
+
 // get session.
 import { useSession } from "next-auth/react";
 
@@ -13,6 +19,7 @@ const AdminReport: React.FC = () => {
   const [users, setUsers] = useState<{ emplid: string; surname: string }[]>([]);
   const [symbols, setSymbols] = useState<{ ticket: string }[]>([]);
   const [categories, setCategories] = useState<{ name: string }[]>([]);
+  const [tabIdx, setTabIdx] = useState("1");
 
   // get users from api and populate.
   useEffect(() => {
@@ -36,6 +43,10 @@ const AdminReport: React.FC = () => {
     fetchCategories();
   }, []);
 
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabIdx(newValue);
+  };
+
   const { data: session, status } = useSession();
   const user = session?.user;
 
@@ -53,23 +64,40 @@ const AdminReport: React.FC = () => {
           <h1 className="text-2xl font-bold text-center">Admin Management</h1>
           <br />
           {/* Create edditable table for users: With Surname and EMPLID should have button for downloading the user specific */}
-          {user && user.name !== "" && user.email !== ""  && ['admin'].includes(user?.name ?? "") ? (
-            <>
-              <UserEditableTable rows={users} setRows={setUsers} />
-              <br />
-
-              <TicketEditableTable rows={symbols} setRows={setSymbols} />
-              <br />
-
-              <CategoryEditableTable
-                rows={categories}
-                setRows={setCategories}
-              />
-            </>
+          {user &&
+          user.name !== "" &&
+          user.email !== "" &&
+          ["admin"].includes(user?.name ?? "") ? (
+            <div className="tab-window">
+              <TabContext value={tabIdx}>
+                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                  <TabList
+                    onChange={handleChange}
+                    aria-label="lab API tabs example"
+                  >
+                    <Tab label="Users" value="1" />
+                    <Tab label="Symbols" value="2" />
+                    <Tab label="Categories" value="3" />
+                  </TabList>
+                </Box>
+                <TabPanel value="1">
+                  <UserEditableTable rows={users} setRows={setUsers} />
+                </TabPanel>
+                <TabPanel value="2">
+                  <TicketEditableTable rows={symbols} setRows={setSymbols} />
+                </TabPanel>
+                <TabPanel value="3">
+                  <CategoryEditableTable
+                    rows={categories}
+                    setRows={setCategories}
+                  />
+                </TabPanel>
+              </TabContext>
+            </div>
           ) : (
-            <>
+            <div className="tab-window flex justify-center ">
               <p>Requires to be admin to view this page.</p>
-            </>
+            </div>
           )}
 
           <br />
