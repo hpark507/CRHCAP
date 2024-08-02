@@ -50,7 +50,7 @@ const LoginForm = () => {
         open={open}
         autoHideDuration={6000}
         onClose={handleClose}
-        message="Logging Out"
+        message="Incorrect credentials"
       />
       <div className="flex flex-col gap-2">
         <div className="flex flex-col gap-2">
