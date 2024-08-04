@@ -22,141 +22,32 @@ import {
 import { Button } from "@mui/material";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { mkConfig, generateCsv, download } from "export-to-csv"; //or use your library of choice here
-//example data type
-export type Person = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  company: string;
-  city: string;
-  country: string;
-};
-
-export const data = [
-  {
-    id: 1,
-    firstName: 'Elenora',
-    lastName: 'Wilkinson',
-    company: 'Feest - Reilly',
-    city: 'Hertaland',
-    country: 'Qatar',
-  },
-  {
-    id: 2,
-    firstName: 'Berneice',
-    lastName: 'Feil',
-    company: 'Deckow, Leuschke and Jaskolski',
-    city: 'Millcreek',
-    country: 'Nepal',
-  },
-  {
-    id: 3,
-    firstName: 'Frieda',
-    lastName: 'Baumbach',
-    company: 'Heidenreich, Grady and Durgan',
-    city: 'Volkmanside',
-    country: 'Croatia',
-  },
-  {
-    id: 4,
-    firstName: 'Zachery',
-    lastName: 'Brown',
-    company: 'Cormier - Skiles',
-    city: 'Faychester',
-    country: 'Saint Pierre and Miquelon',
-  },
-  {
-    id: 5,
-    firstName: 'Kendra',
-    lastName: 'Bins',
-    company: 'Wehner - Wilderman',
-    city: 'New Valentin',
-    country: 'Senegal',
-  },
-  {
-    id: 6,
-    firstName: 'Lysanne',
-    lastName: 'Fisher',
-    company: 'Schmidt LLC',
-    city: 'Malachitown',
-    country: 'Costa Rica',
-  },
-  {
-    id: 7,
-    firstName: 'Garrick',
-    lastName: 'Ryan',
-    company: 'Ryan - Buckridge',
-    city: 'East Pearl',
-    country: 'Cocos (Keeling) Islands',
-  },
-  {
-    id: 8,
-    firstName: 'Hollis',
-    lastName: 'Medhurst',
-    company: 'Quitzon Group',
-    city: 'West Sienna',
-    country: 'Papua New Guinea',
-  },
-  {
-    id: 9,
-    firstName: 'Arlo',
-    lastName: 'Buckridge',
-    company: 'Konopelski - Spinka',
-    city: 'Chino',
-    country: 'Congo',
-  },
-  {
-    id: 10,
-    firstName: 'Rickie',
-    lastName: 'Auer',
-    company: 'Lehner - Walsh',
-    city: 'Nyahfield',
-    country: 'Sudan',
-  },
-  {
-    id: 11,
-    firstName: 'Isidro',
-    lastName: 'Larson',
-    company: 'Reichert - Paucek',
-    city: 'Fort Rosinaside',
-    country: 'Belize',
-  },
-  {
-    id: 12,
-    firstName: 'Bettie',
-    lastName: 'Skiles',
-    company: 'Zulauf, Flatley and Rolfson',
-    city: 'West Feltonchester',
-    country: 'Poland',
-  },
-] as Person[];
+import { PhrasesCSV, SamplePhrasesCSV } from "@/utils/models";
 
 
-const columnHelper = createMRTColumnHelper<Person>();
+const columnHelper = createMRTColumnHelper<PhrasesCSV>();
 
 const columns = [
-  columnHelper.accessor("id", {
-    header: "ID",
-    size: 40,
+  columnHelper.accessor("keyword", {
+    header: "Keyword",
+    size: 100,
   }),
-  columnHelper.accessor("firstName", {
-    header: "First Name",
-    size: 120,
+  columnHelper.accessor("reason", {
+    header: "Reason",
+    size: 200,
   }),
-  columnHelper.accessor("lastName", {
-    header: "Last Name",
-    size: 120,
+  columnHelper.accessor("categories", {
+    header: "Categories",
+    size: 200,
+    // cell: (info: { getValue: () => any[]; }) => info.getValue().join(", "), // Convert array to comma-separated string
   }),
-  columnHelper.accessor("company", {
-    header: "Company",
+  columnHelper.accessor("quote", {
+    header: "Quote",
     size: 300,
   }),
-  columnHelper.accessor("city", {
-    header: "City",
-  }),
-  columnHelper.accessor("country", {
-    header: "Country",
-    size: 220,
+  columnHelper.accessor("weight", {
+    header: "Weight",
+    size: 50,
   }),
 ];
 
@@ -166,6 +57,8 @@ const csvConfig = mkConfig({
   useKeysAsHeaders: true,
 });
 
+const data = SamplePhrasesCSV;
+
 // get session.
 import { useSession } from "next-auth/react";
 
@@ -174,14 +67,14 @@ const AdminReport: React.FC = () => {
   const [symbols, setSymbols] = useState<{ ticket: string }[]>([]);
   const [categories, setCategories] = useState<{ name: string }[]>([]);
   const [tabIdx, setTabIdx] = useState<string>("1");
-  const handleExportRows = (rows: MRT_Row<Person>[]) => {
+  const handleExportRows = (rows: MRT_Row<PhrasesCSV>[]) => {
     const rowData = rows.map((row) => row.original);
-    const csv = generateCsv(csvConfig)(rowData);
+    const csv = generateCsv(csvConfig)(rowData.map((row) => ({ ...row, ...row })));
     download(csvConfig)(csv);
   };
 
   const handleExportData = () => {
-    const csv = generateCsv(csvConfig)(data);
+    const csv = generateCsv(csvConfig)(data.map((row) => ({ ...row, categories: categories.join('') })));
     download(csvConfig)(csv);
   };
 
@@ -313,8 +206,6 @@ const AdminReport: React.FC = () => {
                 </TabPanel>
                 <TabPanel value="4">
                   <p>Phrases</p>
-                  {/* <MaterialReactTable table={table} />
-                  <MaterialReactTable table={table} /> */}
                   <MaterialReactTable table={table} />
                 </TabPanel>
               </TabContext>

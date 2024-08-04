@@ -20,18 +20,12 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { PhrasesRow } from "@/utils/models";
 
-interface Row {
-  keyword: string;
-  reason: string;
-  categories: string[];
-  quote: string;
-  weight: number;
-}
 
 const EditableTable: React.FC = () => {
-  const [rows, setRows] = useState<Row[]>([]);
-  const [newRow, setNewRow] = useState<Row>({
+  const [rows, setRows] = useState<PhrasesRow[]>([]);
+  const [newRow, setNewRow] = useState<PhrasesRow>({
     keyword: "",
     reason: "",
     categories: [],

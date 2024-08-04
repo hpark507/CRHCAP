@@ -27,18 +27,11 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
-
-interface Row {
-  keyword: string;
-  reason: string;
-  categories: string[];
-  quote: string;
-  weight: number;
-}
+import { PhrasesRow } from "@/utils/models";
 
 interface EditableTableProps {
-  rows: Row[];
-  setRows: React.Dispatch<React.SetStateAction<Row[]>>;
+  rows: PhrasesRow[];
+  setRows: React.Dispatch<React.SetStateAction<PhrasesRow[]>>;
   stockSymbol: string;
   user_id: string;
   table_name: string;
@@ -51,7 +44,7 @@ const EditableTable: React.FC<EditableTableProps> = ({
   user_id,
   table_name,
 }) => {
-  const [newRow, setNewRow] = useState<Row>({
+  const [newRow, setNewRow] = useState<PhrasesRow>({
     keyword: "",
     reason: "",
     categories: [],
@@ -123,6 +116,7 @@ const EditableTable: React.FC<EditableTableProps> = ({
 
   useEffect(() => {
     handleReceiveData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [table_name, user_id, stockSymbol]);
 
   const handleDeleteRow = (index: number) => {
