@@ -219,6 +219,7 @@ const EditableTable: React.FC<EditableTableProps> = ({
                   type="number"
                   value={newRow.weight}
                   onChange={handleInputChange}
+                  inputProps={{ min: 0, max: 9 }}
                 />
               </TableCell>
               <TableCell>
