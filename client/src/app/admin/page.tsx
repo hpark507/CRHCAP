@@ -4,7 +4,12 @@ import UserEditableTable from "@/components/UserEditableTable";
 import TicketEditableTable from "@/components/TicketEditableTable";
 import CategoryEditableTable from "@/components/CategoriesEditableTable";
 import Header from "@/components/Header";
-import { getUsers, getSymbols, getCategories } from "@/utils/api";
+import {
+  getUsers,
+  getSymbols,
+  getCategories,
+  getAllPhrases,
+} from "@/utils/api";
 
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
@@ -23,7 +28,6 @@ import { Button } from "@mui/material";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { mkConfig, generateCsv, download } from "export-to-csv"; //or use your library of choice here
 import { PhrasesCSV, SamplePhrasesCSV } from "@/utils/models";
-
 
 const columnHelper = createMRTColumnHelper<PhrasesCSV>();
 
@@ -49,6 +53,14 @@ const columns = [
     header: "Weight",
     size: 50,
   }),
+  columnHelper.accessor("symbol", {
+    header: "Symbol",
+    size: 60,
+  }),
+  columnHelper.accessor("emplid", {
+    header: "EMPLID",
+    size: 100,
+  }),
 ];
 
 const csvConfig = mkConfig({
@@ -57,24 +69,77 @@ const csvConfig = mkConfig({
   useKeysAsHeaders: true,
 });
 
-const data = SamplePhrasesCSV;
+
 
 // get session.
 import { useSession } from "next-auth/react";
 
+const convertJsonToCsvFriendlyJson = (json: any) => {
+  /**
+   *{
+//   "keyword": "asdasd",
+//   "reason": "asdas",
+//   "weight": 3,
+//   "table_name": "23881381AAPL",
+//   "id": "8c29b43a-e0bd-4a91-bf12-04351af35b5b",
+//   "categories": [
+//       "Healthcare"
+//   ],
+//   "quote": "asdasd",
+//   "symbol": "AAPL"
+// }
+
+// To:
+*{
+//   "keyword": "asdasd",
+//   "reason": "asdas",
+//   "weight": 3,
+//   "categories": "Healthcare",
+//   "quote": "asdasd",
+//   "symbol": "AAPL"
+//  "emplid": "23881381" 
+// }
+   * @returns {json} json with categories as string.
+   */
+
+  const categories = json.categories.join(", ");
+  const emplid = json.table_name.split(json.symbol)[0];
+  const newJson = {
+    keyword: json.keyword,
+    reason: json.reason,
+    weight: json.weight,
+    categories: categories,
+    quote: json.quote,
+    symbol: json.symbol,
+    emplid: emplid,
+  };
+  return newJson;
+};
+
+const convertListJsonTOFriendly = (json: any[]) => {
+  for (let i = 0; i < json.length; i++) {
+    json[i] = convertJsonToCsvFriendlyJson(json[i]);
+  }
+  return json;
+};
 const AdminReport: React.FC = () => {
   const [users, setUsers] = useState<{ emplid: string; surname: string }[]>([]);
   const [symbols, setSymbols] = useState<{ ticket: string }[]>([]);
   const [categories, setCategories] = useState<{ name: string }[]>([]);
   const [tabIdx, setTabIdx] = useState<string>("1");
+  const [data, setData] = useState<PhrasesCSV[]>(SamplePhrasesCSV);
   const handleExportRows = (rows: MRT_Row<PhrasesCSV>[]) => {
     const rowData = rows.map((row) => row.original);
-    const csv = generateCsv(csvConfig)(rowData.map((row) => ({ ...row, ...row })));
+    const csv = generateCsv(csvConfig)(
+      rowData.map((row) => ({ ...row, ...row }))
+    );
     download(csvConfig)(csv);
   };
 
   const handleExportData = () => {
-    const csv = generateCsv(csvConfig)(data.map((row) => ({ ...row, categories: categories.join('') })));
+    const csv = generateCsv(csvConfig)(
+      data.map((row) => ({ ...row, categories: categories.join("") }))
+    );
     download(csvConfig)(csv);
   };
 
@@ -95,9 +160,19 @@ const AdminReport: React.FC = () => {
       setCategories(categories);
     }
 
+    async function fetchPhrases() {
+      const phrases: PhrasesCSV[] = await getAllPhrases();
+      const newdata = convertListJsonTOFriendly(phrases);
+      // console.log("raw phrases", phrases);
+      // console.log("data phrases", newdata);
+      // console.log("data phrases existent", data);
+      setData(newdata);
+    }
+
     fetchUsers();
     fetchSymbols();
     fetchCategories();
+    fetchPhrases();
   }, []);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -111,16 +186,16 @@ const AdminReport: React.FC = () => {
     columns,
     data,
     enableRowSelection: true,
-    columnFilterDisplayMode: 'popover',
-    paginationDisplayMode: 'pages',
-    positionToolbarAlertBanner: 'bottom',
+    columnFilterDisplayMode: "popover",
+    paginationDisplayMode: "pages",
+    positionToolbarAlertBanner: "bottom",
     renderTopToolbarCustomActions: ({ table }) => (
       <Box
         sx={{
-          display: 'flex',
-          gap: '16px',
-          padding: '8px',
-          flexWrap: 'wrap',
+          display: "flex",
+          gap: "16px",
+          padding: "8px",
+          flexWrap: "wrap",
         }}
       >
         <Button
