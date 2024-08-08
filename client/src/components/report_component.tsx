@@ -155,7 +155,7 @@ const Report: React.FC<ReportProps> = ({ reportProps }) => {
             <br />
             <p>
               Please download the 10k report from the stock symbol mentioned and
-              provide 10 keywords research
+              provide 10 keywords research.
             </p>
             <br />
             <br />
